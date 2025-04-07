@@ -1,10 +1,9 @@
 'use server'
 
 import { db } from '@/app/db';
-import { petsTable } from '@/app/db/schema';
+import { petsTable, insertPetSchema } from '@/app/db/schema';
 import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
-import { insertPetSchema } from '@/app/lib/validations';
 import { ZodError } from 'zod';
 
 export async function addPet(formData: FormData) {

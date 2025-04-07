@@ -1,8 +1,8 @@
-import { PetForm } from '@/app/components/pets/pet-form';
-import { PetsTable } from '@/app/components/pets/pets-table';
+import { PetForm } from '@/components/pets/pet-form';
+import { PetsTable } from '@/components/pets/pets-table';
 import { fetchPets } from '@/app/lib/data';
 import { Suspense } from 'react';
-import { TableSkeleton } from '@/app/components/pets/table-skeleton';
+import { TableSkeleton } from '@/components/pets/table-skeleton';
 
 export default async function PetsPage() {
     return (
