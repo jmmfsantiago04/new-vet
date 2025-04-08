@@ -51,13 +51,24 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+
+  /* Updated vibrant colors for the hero section */
+  --primary: oklch(0.55 0.25 250);
+  /* Rich purple */
+  --primary-light: oklch(0.65 0.22 260);
+  /* Lighter purple */
+  --secondary: oklch(0.60 0.28 140);
+  /* Vibrant teal */
+  --secondary-light: oklch(0.65 0.25 145);
+  /* Lighter teal */
+  --accent: oklch(0.85 0.12 140);
+  /* Soft mint */
+
+  /* Rest of the existing variables */
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
@@ -81,17 +92,28 @@
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
+
+  /* Updated vibrant colors for dark mode */
+  --primary: oklch(0.60 0.28 250);
+  /* Brighter purple for dark mode */
+  --primary-light: oklch(0.70 0.25 260);
+  /* Lighter purple for dark mode */
+  --secondary: oklch(0.65 0.30 140);
+  /* Brighter teal for dark mode */
+  --secondary-light: oklch(0.70 0.27 145);
+  /* Lighter teal for dark mode */
+  --accent: oklch(0.90 0.15 140);
+  /* Brighter mint for dark mode */
+
+  /* Rest of the dark mode variables */
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
@@ -116,6 +138,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
