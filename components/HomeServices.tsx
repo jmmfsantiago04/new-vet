@@ -4,7 +4,7 @@ export default function HomeServices() {
             title: 'Consultas por Vídeo',
             description: 'Atendimento virtual face a face com veterinários experientes',
             icon: '🎥',
-            bgColor: 'bg-blue-500'
+            bgColor: 'bg-[var(--primary)]'
         },
         {
             title: 'Suporte 24/7',
@@ -16,12 +16,12 @@ export default function HomeServices() {
             title: 'Acompanhamento',
             description: 'Suporte contínuo e monitoramento da saúde do seu pet',
             icon: '🏥',
-            bgColor: 'bg-[var(--secondary)]'
+            bgColor: 'bg-[var(--primary)]'
         },
     ];
 
     return (
-        <section className="py-20 bg-gray-50">
+        <section className="py-16 md:py-24 bg-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-[var(--primary)]">
                     Nossos Serviços
@@ -34,9 +34,9 @@ export default function HomeServices() {
                     {services.map((service, index) => (
                         <div
                             key={index}
-                            className="p-6 rounded-xl bg-white shadow-md hover:shadow-lg transition-all duration-300"
+                            className="p-8 rounded-xl bg-white shadow-md hover:shadow-lg transition-all duration-300"
                         >
-                            <div className={`w-14 h-14 mb-6 rounded-lg flex items-center justify-center text-2xl ${service.bgColor} text-white`}>
+                            <div className={`w-12 h-12 mb-6 rounded-xl flex items-center justify-center text-2xl ${service.bgColor} text-white`}>
                                 {service.icon}
                             </div>
                             <h3 className="text-xl font-semibold mb-3 text-[var(--primary)]">
