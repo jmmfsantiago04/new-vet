@@ -8,6 +8,34 @@
       "when": 1743980316702,
       "tag": "0000_giant_praxagora",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1744219263189,
+      "tag": "0001_puzzling_korg",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1744220482561,
+      "tag": "0002_nasty_champions",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1744230909902,
+      "tag": "0003_lively_nico_minoru",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1744231005905,
+      "tag": "0004_ambitious_may_parker",
+      "breakpoints": true
     }
   ]
 }

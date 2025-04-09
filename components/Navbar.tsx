@@ -65,6 +65,12 @@ export default function Navbar() {
                         >
                             Área do Cliente
                         </Link>
+                        <Link
+                            href="/signup"
+                            className="bg-[var(--primary)] text-white px-4 py-2 rounded-lg hover:bg-[var(--primary-light)] transition-colors font-medium"
+                        >
+                            Criar Conta
+                        </Link>
                     </div>
 
                     {/* Botão do Menu Mobile */}
@@ -130,6 +136,13 @@ export default function Navbar() {
                                 className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors font-medium"
                             >
                                 Área do Cliente
+                            </Link>
+                            <Link
+                                href="/signup"
+                                onClick={handleLinkClick}
+                                className="bg-[var(--primary)] text-white px-4 py-2 rounded-lg hover:bg-[var(--primary-light)] transition-colors font-medium text-center"
+                            >
+                                Criar Conta
                             </Link>
                         </div>
                     </div>

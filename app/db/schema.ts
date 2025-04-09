@@ -6,8 +6,18 @@ import { z } from 'zod';
 export const usersTable = pgTable("users", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     name: varchar({ length: 255 }).notNull(),
-    age: integer().notNull(),
     email: varchar({ length: 255 }).notNull().unique(),
+    password: varchar({ length: 255 }).notNull(),
+    role: varchar({ length: 20 }).default('user').notNull(),
+    createdAt: timestamp().defaultNow().notNull(),
+    updatedAt: timestamp().defaultNow().notNull(),
+});
+
+export const sessionsTable = pgTable("sessions", {
+    id: varchar({ length: 255 }).primaryKey(),
+    userId: integer().notNull().references(() => usersTable.id),
+    expiresAt: timestamp().notNull(),
+    createdAt: timestamp().defaultNow().notNull(),
 });
 
 export const petsTable = pgTable("pets", {
@@ -44,6 +54,27 @@ export const insertPetSchema = createInsertSchema(petsTable, {
     medicalHistory: (schema) => schema.nullable().optional(),
 });
 
+// Auth Schemas
+export const signUpSchema = z.object({
+    name: z.string().min(2, 'Nome deve ter pelo menos 2 caracteres').max(255, 'Nome muito longo'),
+    email: z.string().email('Por favor, insira um e-mail válido'),
+    password: z.string().min(8, 'Senha deve ter pelo menos 8 caracteres')
+        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, 'Senha deve conter pelo menos uma letra maiúscula, uma minúscula e um número'),
+    confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "As senhas não coincidem",
+    path: ["confirmPassword"],
+});
+
+export const signInSchema = z.object({
+    email: z.string().email('Por favor, insira um e-mail válido'),
+    password: z.string().min(1, 'Senha é obrigatória'),
+});
+
 // Types
 export type InsertPet = z.infer<typeof insertPetSchema>;
-export type SelectPet = z.infer<typeof selectPetSchema>; 
+export type SelectPet = z.infer<typeof selectPetSchema>;
+export type SignUpInput = z.infer<typeof signUpSchema>;
+export type SignInInput = z.infer<typeof signInSchema>;
+export type Session = typeof sessionsTable.$inferSelect;
+export type InsertSession = typeof sessionsTable.$inferInsert; 

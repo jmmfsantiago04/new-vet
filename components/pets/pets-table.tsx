@@ -13,6 +13,7 @@ import { useTransition } from "react";
 import { deletePet } from "@/app/pets/actions";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { format } from "date-fns";
+import { ptBR } from 'date-fns/locale';
 
 interface Pet {
     id: number;
@@ -45,9 +46,9 @@ export function PetsTable({ pets }: PetsTableProps) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Pet List</CardTitle>
+                <CardTitle>Lista de Pets</CardTitle>
                 <CardDescription>
-                    {pets.length} {pets.length === 1 ? 'pet' : 'pets'} registered
+                    {pets.length} {pets.length === 1 ? 'pet cadastrado' : 'pets cadastrados'}
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -56,22 +57,22 @@ export function PetsTable({ pets }: PetsTableProps) {
                         <Table>
                             <TableHeader>
                                 <TableRow className="bg-muted/50">
-                                    <TableHead className="font-semibold">Name</TableHead>
-                                    <TableHead className="font-semibold">Species</TableHead>
-                                    <TableHead className="font-semibold hidden md:table-cell">Breed</TableHead>
-                                    <TableHead className="font-semibold hidden sm:table-cell">Age</TableHead>
-                                    <TableHead className="font-semibold hidden sm:table-cell">Weight (kg)</TableHead>
-                                    <TableHead className="font-semibold">Owner</TableHead>
-                                    <TableHead className="font-semibold hidden md:table-cell">Phone</TableHead>
-                                    <TableHead className="font-semibold hidden lg:table-cell">Added</TableHead>
-                                    <TableHead className="font-semibold text-right">Actions</TableHead>
+                                    <TableHead className="font-semibold">Nome</TableHead>
+                                    <TableHead className="font-semibold">Espécie</TableHead>
+                                    <TableHead className="font-semibold hidden md:table-cell">Raça</TableHead>
+                                    <TableHead className="font-semibold hidden sm:table-cell">Idade</TableHead>
+                                    <TableHead className="font-semibold hidden sm:table-cell">Peso (kg)</TableHead>
+                                    <TableHead className="font-semibold">Proprietário</TableHead>
+                                    <TableHead className="font-semibold hidden md:table-cell">Telefone</TableHead>
+                                    <TableHead className="font-semibold hidden lg:table-cell">Cadastrado em</TableHead>
+                                    <TableHead className="font-semibold text-right">Ações</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
                                 {pets.length === 0 ? (
                                     <TableRow>
                                         <TableCell colSpan={9} className="text-center text-muted-foreground py-10">
-                                            No pets found. Add your first pet using the form above.
+                                            Nenhum pet encontrado. Adicione seu primeiro pet usando o formulário acima.
                                         </TableCell>
                                     </TableRow>
                                 ) : (
@@ -80,7 +81,12 @@ export function PetsTable({ pets }: PetsTableProps) {
                                             <TableCell className="font-medium max-w-[150px] truncate">
                                                 {pet.name}
                                             </TableCell>
-                                            <TableCell>{pet.species}</TableCell>
+                                            <TableCell>
+                                                {pet.species === 'dog' ? 'Cachorro' :
+                                                    pet.species === 'cat' ? 'Gato' :
+                                                        pet.species === 'bird' ? 'Pássaro' :
+                                                            'Outro'}
+                                            </TableCell>
                                             <TableCell className="hidden md:table-cell">
                                                 {pet.breed || '-'}
                                             </TableCell>
@@ -97,7 +103,7 @@ export function PetsTable({ pets }: PetsTableProps) {
                                                 {pet.ownerPhone}
                                             </TableCell>
                                             <TableCell className="hidden lg:table-cell text-muted-foreground">
-                                                {format(new Date(pet.createdAt), 'MMM d, yyyy')}
+                                                {format(new Date(pet.createdAt), "d 'de' MMM 'de' yyyy", { locale: ptBR })}
                                             </TableCell>
                                             <TableCell className="text-right">
                                                 <Button
@@ -107,7 +113,7 @@ export function PetsTable({ pets }: PetsTableProps) {
                                                     disabled={isPending}
                                                     className="hover:bg-red-600"
                                                 >
-                                                    {isPending ? 'Deleting...' : 'Delete'}
+                                                    {isPending ? 'Excluindo...' : 'Excluir'}
                                                 </Button>
                                             </TableCell>
                                         </TableRow>
