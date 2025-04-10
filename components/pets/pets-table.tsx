@@ -22,10 +22,9 @@ interface Pet {
     breed: string | null;
     age: number | null;
     weight: number | null;
-    ownerName: string;
-    ownerPhone: string;
     medicalHistory: string | null;
     createdAt: Date;
+    userId: number;
 }
 
 interface PetsTableProps {
@@ -62,8 +61,6 @@ export function PetsTable({ pets }: PetsTableProps) {
                                     <TableHead className="font-semibold hidden md:table-cell">Raça</TableHead>
                                     <TableHead className="font-semibold hidden sm:table-cell">Idade</TableHead>
                                     <TableHead className="font-semibold hidden sm:table-cell">Peso (kg)</TableHead>
-                                    <TableHead className="font-semibold">Proprietário</TableHead>
-                                    <TableHead className="font-semibold hidden md:table-cell">Telefone</TableHead>
                                     <TableHead className="font-semibold hidden lg:table-cell">Cadastrado em</TableHead>
                                     <TableHead className="font-semibold text-right">Ações</TableHead>
                                 </TableRow>
@@ -95,12 +92,6 @@ export function PetsTable({ pets }: PetsTableProps) {
                                             </TableCell>
                                             <TableCell className="hidden sm:table-cell">
                                                 {pet.weight || '-'}
-                                            </TableCell>
-                                            <TableCell className="max-w-[150px] truncate">
-                                                {pet.ownerName}
-                                            </TableCell>
-                                            <TableCell className="hidden md:table-cell">
-                                                {pet.ownerPhone}
                                             </TableCell>
                                             <TableCell className="hidden lg:table-cell text-muted-foreground">
                                                 {format(new Date(pet.createdAt), "d 'de' MMM 'de' yyyy", { locale: ptBR })}

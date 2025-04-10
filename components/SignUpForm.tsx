@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema, SignUpInput } from '@/app/db/schema';
 import { signUp } from '@/app/actions/auth';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,12 +21,14 @@ import {
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
 export default function SignUpForm() {
+    const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const form = useForm<SignUpInput>({
         resolver: zodResolver(signUpSchema),
         defaultValues: {
             name: '',
             email: '',
+            phone: '',
             password: '',
             confirmPassword: '',
         },
@@ -34,13 +38,14 @@ export default function SignUpForm() {
         startTransition(async () => {
             try {
                 await signUp(data);
+                toast.success('Conta criada com sucesso!');
                 form.reset();
-                // You can add a success notification or redirect here
+                router.push('/cliente/dashboard');
             } catch (error) {
                 if (error instanceof Error) {
-                    form.setError('root', { message: error.message });
+                    toast.error(error.message);
                 } else {
-                    form.setError('root', { message: 'Algo deu errado' });
+                    toast.error('Erro ao criar conta');
                 }
             }
         });
@@ -87,6 +92,23 @@ export default function SignUpForm() {
                                         <Input
                                             type="email"
                                             placeholder="Digite seu e-mail"
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="phone"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Telefone</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder="+5571999999999"
                                             {...field}
                                         />
                                     </FormControl>

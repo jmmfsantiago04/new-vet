@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signInSchema, SignInInput } from '@/app/db/schema';
 import { signIn } from '@/app/actions/auth';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -35,14 +36,20 @@ export default function LoginForm() {
             try {
                 const result = await signIn(data);
                 if (result.user) {
+                    toast.success('Login realizado com sucesso!');
                     form.reset();
-                    router.push('/cliente/dashboard'); // Redirect to dashboard after successful login
+                    // Redirect based on user role
+                    if (result.user.role === 'admin') {
+                        router.push('/admin');
+                    } else {
+                        router.push('/cliente/dashboard');
+                    }
                 }
             } catch (error) {
                 if (error instanceof Error) {
-                    form.setError('root', { message: error.message });
+                    toast.error(error.message);
                 } else {
-                    form.setError('root', { message: 'Credenciais inválidas' });
+                    toast.error('Credenciais inválidas');
                 }
             }
         });

@@ -6,25 +6,25 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTransition } from 'react';
-import { addPet } from '@/app/pets/actions';
-import { useRef, useState } from 'react';
+import { addPet } from '@/app/actions/pets';
+import { useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { toast } from 'sonner';
 
 export function PetForm() {
     const [isPending, startTransition] = useTransition();
     const formRef = useRef<HTMLFormElement>(null);
-    const [error, setError] = useState<string | null>(null);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setError(null);
         const formData = new FormData(e.currentTarget);
 
         startTransition(async () => {
             const result = await addPet(formData);
             if (result.error) {
-                setError(result.error);
+                toast.error(result.error);
             } else {
+                toast.success('Pet adicionado com sucesso!');
                 formRef.current?.reset();
             }
         });
@@ -34,16 +34,10 @@ export function PetForm() {
         <Card className="w-full">
             <CardHeader>
                 <CardTitle>Adicionar Novo Pet</CardTitle>
-                <CardDescription>Insira as informações do pet e do proprietário abaixo</CardDescription>
+                <CardDescription>Insira as informações do seu pet abaixo</CardDescription>
             </CardHeader>
             <CardContent>
                 <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-                    {error && (
-                        <div className="bg-destructive/10 border border-destructive/20 text-destructive p-4 rounded-lg mb-4 text-sm">
-                            {error}
-                        </div>
-                    )}
-
                     <div className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                             <div className="space-y-2">
@@ -107,36 +101,6 @@ export function PetForm() {
                                         max="200"
                                         className="w-full"
                                     />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="border-t pt-6">
-                            <h3 className="text-sm font-medium text-muted-foreground mb-4">Informações do Proprietário</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                                <div className="space-y-2">
-                                    <Label htmlFor="ownerName" className="text-sm font-medium">Nome do Proprietário</Label>
-                                    <Input
-                                        id="ownerName"
-                                        name="ownerName"
-                                        placeholder="Digite o nome do proprietário"
-                                        className="w-full"
-                                        required
-                                    />
-                                </div>
-
-                                <div className="space-y-2">
-                                    <Label htmlFor="ownerPhone" className="text-sm font-medium">Telefone</Label>
-                                    <Input
-                                        id="ownerPhone"
-                                        name="ownerPhone"
-                                        placeholder="+55999999999"
-                                        pattern="^\+?[1-9]\d{1,14}$"
-                                        title="Por favor, insira um número de telefone válido começando com + seguido do código do país e número"
-                                        className="w-full"
-                                        required
-                                    />
-                                    <p className="text-xs text-muted-foreground">Formato: +CódigoPaísNúmero (ex: +5571999999999)</p>
                                 </div>
                             </div>
                         </div>
