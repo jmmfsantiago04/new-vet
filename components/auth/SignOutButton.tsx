@@ -33,7 +33,10 @@ export default function SignOutButton({ className }: SignOutButtonProps) {
             variant="outline"
             onClick={handleSignOut}
             disabled={isPending}
-            className={cn(className)}
+            className={cn(
+                "text-sm sm:text-base px-3 sm:px-4 py-2 sm:py-2.5 min-w-[80px] sm:min-w-[100px]",
+                className
+            )}
         >
             {isPending ? 'Saindo...' : 'Sair'}
         </Button>

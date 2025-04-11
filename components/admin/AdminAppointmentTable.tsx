@@ -32,6 +32,7 @@ import { toast } from "sonner";
 import { updateAppointmentStatus } from "@/app/actions/appointments";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Appointment {
     id: number;
@@ -56,9 +57,10 @@ interface Appointment {
 
 interface AdminAppointmentTableProps {
     appointments: Appointment[];
+    isLoading?: boolean;
 }
 
-export function AdminAppointmentTable({ appointments }: AdminAppointmentTableProps) {
+export function AdminAppointmentTable({ appointments, isLoading = false }: AdminAppointmentTableProps) {
     const router = useRouter();
     const [isStatusDialogOpen, setIsStatusDialogOpen] = useState(false);
     const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
@@ -112,6 +114,57 @@ export function AdminAppointmentTable({ appointments }: AdminAppointmentTablePro
         return speciesMap[species] || 'Outro';
     };
 
+    if (isLoading) {
+        return (
+            <Card>
+                <CardHeader>
+                    <CardTitle><Skeleton className="h-8 w-[100px]" /></CardTitle>
+                    <CardDescription>
+                        <Skeleton className="h-4 w-[250px]" />
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="rounded-md border">
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead><Skeleton className="h-4 w-[100px]" /></TableHead>
+                                    <TableHead><Skeleton className="h-4 w-[80px]" /></TableHead>
+                                    <TableHead><Skeleton className="h-4 w-[100px]" /></TableHead>
+                                    <TableHead><Skeleton className="h-4 w-[120px]" /></TableHead>
+                                    <TableHead><Skeleton className="h-4 w-[150px]" /></TableHead>
+                                    <TableHead><Skeleton className="h-4 w-[100px]" /></TableHead>
+                                    <TableHead><Skeleton className="h-4 w-[120px]" /></TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {Array(5).fill(0).map((_, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell><Skeleton className="h-4 w-[100px]" /></TableCell>
+                                        <TableCell><Skeleton className="h-4 w-[80px]" /></TableCell>
+                                        <TableCell>
+                                            <Skeleton className="h-4 w-[100px] mb-2" />
+                                            <Skeleton className="h-4 w-[80px]" />
+                                        </TableCell>
+                                        <TableCell><Skeleton className="h-4 w-[120px]" /></TableCell>
+                                        <TableCell>
+                                            <Skeleton className="h-4 w-[120px] mb-2" />
+                                            <Skeleton className="h-4 w-[180px]" />
+                                        </TableCell>
+                                        <TableCell><Skeleton className="h-6 w-[100px]" /></TableCell>
+                                        <TableCell>
+                                            <Skeleton className="h-8 w-[120px]" />
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+                </CardContent>
+            </Card>
+        );
+    }
+
     return (
         <>
             <Card>
@@ -126,31 +179,36 @@ export function AdminAppointmentTable({ appointments }: AdminAppointmentTablePro
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>Data</TableHead>
-                                    <TableHead>Horário</TableHead>
+                                    <TableHead className="hidden sm:table-cell">Data</TableHead>
+                                    <TableHead className="hidden sm:table-cell">Horário</TableHead>
                                     <TableHead>Pet</TableHead>
-                                    <TableHead>Tutor</TableHead>
-                                    <TableHead>Contato</TableHead>
+                                    <TableHead className="hidden md:table-cell">Tutor</TableHead>
+                                    <TableHead className="hidden lg:table-cell">Contato</TableHead>
                                     <TableHead>Status</TableHead>
-                                    <TableHead>Ações</TableHead>
+                                    <TableHead className="text-right">Ações</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
                                 {appointments.map((appointment) => (
                                     <TableRow key={appointment.id}>
-                                        <TableCell>
+                                        <TableCell className="hidden sm:table-cell">
                                             {format(new Date(appointment.date), "dd/MM/yyyy")}
                                         </TableCell>
-                                        <TableCell>{appointment.time}</TableCell>
+                                        <TableCell className="hidden sm:table-cell">{appointment.time}</TableCell>
                                         <TableCell>
+                                            <div className="sm:hidden mb-1">
+                                                <span className="text-sm text-muted-foreground">
+                                                    {format(new Date(appointment.date), "dd/MM/yyyy")} - {appointment.time}
+                                                </span>
+                                            </div>
                                             {appointment.pet.name}
                                             <br />
                                             <span className="text-sm text-muted-foreground">
                                                 {getSpeciesLabel(appointment.pet.species)}
                                             </span>
                                         </TableCell>
-                                        <TableCell>{appointment.user.name}</TableCell>
-                                        <TableCell>
+                                        <TableCell className="hidden md:table-cell">{appointment.user.name}</TableCell>
+                                        <TableCell className="hidden lg:table-cell">
                                             {appointment.user.phone}
                                             <br />
                                             <span className="text-sm text-muted-foreground">
@@ -158,9 +216,14 @@ export function AdminAppointmentTable({ appointments }: AdminAppointmentTablePro
                                             </span>
                                         </TableCell>
                                         <TableCell>
+                                            <div className="md:hidden mb-1">
+                                                <span className="text-sm text-muted-foreground block">
+                                                    {appointment.user.name}
+                                                </span>
+                                            </div>
                                             {getStatusBadge(appointment.status)}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell className="text-right">
                                             <Button
                                                 variant="outline"
                                                 size="sm"

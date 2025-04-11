@@ -33,15 +33,19 @@ export function PetForm() {
     return (
         <Card className="w-full">
             <CardHeader>
-                <CardTitle>Adicionar Novo Pet</CardTitle>
-                <CardDescription>Insira as informações do seu pet abaixo</CardDescription>
+                <CardTitle className="text-xl sm:text-2xl">Adicionar Novo Pet</CardTitle>
+                <CardDescription className="text-sm sm:text-base">
+                    Insira as informações do seu pet abaixo
+                </CardDescription>
             </CardHeader>
             <CardContent>
-                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-                    <div className="space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                    <div className="space-y-4 sm:space-y-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                             <div className="space-y-2">
-                                <Label htmlFor="name" className="text-sm font-medium">Nome do Pet</Label>
+                                <Label htmlFor="name" className="text-sm sm:text-base font-medium">
+                                    Nome do Pet
+                                </Label>
                                 <Input
                                     id="name"
                                     name="name"
@@ -52,12 +56,14 @@ export function PetForm() {
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="species" className="text-sm font-medium">Espécie</Label>
+                                <Label htmlFor="species" className="text-sm sm:text-base font-medium">
+                                    Espécie
+                                </Label>
                                 <Select name="species" required>
                                     <SelectTrigger className="w-full">
                                         <SelectValue placeholder="Selecione a espécie" />
                                     </SelectTrigger>
-                                    <SelectContent>
+                                    <SelectContent className="max-h-[200px]">
                                         <SelectItem value="dog">Cachorro</SelectItem>
                                         <SelectItem value="cat">Gato</SelectItem>
                                         <SelectItem value="bird">Pássaro</SelectItem>
@@ -67,7 +73,9 @@ export function PetForm() {
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="breed" className="text-sm font-medium">Raça</Label>
+                                <Label htmlFor="breed" className="text-sm sm:text-base font-medium">
+                                    Raça
+                                </Label>
                                 <Input
                                     id="breed"
                                     name="breed"
@@ -78,7 +86,9 @@ export function PetForm() {
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="age" className="text-sm font-medium">Idade</Label>
+                                    <Label htmlFor="age" className="text-sm sm:text-base font-medium">
+                                        Idade
+                                    </Label>
                                     <Input
                                         id="age"
                                         name="age"
@@ -91,7 +101,9 @@ export function PetForm() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <Label htmlFor="weight" className="text-sm font-medium">Peso (kg)</Label>
+                                    <Label htmlFor="weight" className="text-sm sm:text-base font-medium">
+                                        Peso (kg)
+                                    </Label>
                                     <Input
                                         id="weight"
                                         name="weight"
@@ -106,19 +118,21 @@ export function PetForm() {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="medicalHistory" className="text-sm font-medium">Histórico Médico</Label>
+                            <Label htmlFor="medicalHistory" className="text-sm sm:text-base font-medium">
+                                Histórico Médico
+                            </Label>
                             <Textarea
                                 id="medicalHistory"
                                 name="medicalHistory"
                                 placeholder="Digite o histórico médico"
-                                className="min-h-[120px] resize-y"
+                                className="min-h-[120px] resize-y w-full"
                             />
                         </div>
 
-                        <div className="flex justify-end pt-4">
+                        <div className="flex justify-end pt-4 sm:pt-6">
                             <Button
                                 type="submit"
-                                className="w-full sm:w-auto min-w-[200px]"
+                                className="w-full sm:w-auto sm:min-w-[200px]"
                                 disabled={isPending}
                                 size="lg"
                             >

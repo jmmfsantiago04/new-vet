@@ -34,6 +34,7 @@ import {
 import { toast } from "sonner";
 import { updatePet, deletePet } from "@/app/actions/pets";
 import { useRouter } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Pet {
     id: number;
@@ -54,9 +55,10 @@ interface Pet {
 
 interface AdminPetTableProps {
     pets: Pet[];
+    isLoading?: boolean;
 }
 
-export function AdminPetTable({ pets }: AdminPetTableProps) {
+export function AdminPetTable({ pets, isLoading = false }: AdminPetTableProps) {
     const router = useRouter();
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -115,6 +117,59 @@ export function AdminPetTable({ pets }: AdminPetTableProps) {
         return speciesMap[species] || 'Outro';
     };
 
+    if (isLoading) {
+        return (
+            <Card>
+                <CardHeader>
+                    <CardTitle><Skeleton className="h-8 w-[100px]" /></CardTitle>
+                    <CardDescription>
+                        <Skeleton className="h-4 w-[250px]" />
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="rounded-md border">
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead><Skeleton className="h-4 w-[80px]" /></TableHead>
+                                    <TableHead><Skeleton className="h-4 w-[100px]" /></TableHead>
+                                    <TableHead><Skeleton className="h-4 w-[80px]" /></TableHead>
+                                    <TableHead><Skeleton className="h-4 w-[80px]" /></TableHead>
+                                    <TableHead><Skeleton className="h-4 w-[80px]" /></TableHead>
+                                    <TableHead><Skeleton className="h-4 w-[120px]" /></TableHead>
+                                    <TableHead><Skeleton className="h-4 w-[150px]" /></TableHead>
+                                    <TableHead><Skeleton className="h-4 w-[100px]" /></TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {Array(5).fill(0).map((_, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell><Skeleton className="h-4 w-[80px]" /></TableCell>
+                                        <TableCell><Skeleton className="h-4 w-[100px]" /></TableCell>
+                                        <TableCell><Skeleton className="h-4 w-[80px]" /></TableCell>
+                                        <TableCell><Skeleton className="h-4 w-[80px]" /></TableCell>
+                                        <TableCell><Skeleton className="h-4 w-[80px]" /></TableCell>
+                                        <TableCell><Skeleton className="h-4 w-[120px]" /></TableCell>
+                                        <TableCell>
+                                            <Skeleton className="h-4 w-[150px] mb-2" />
+                                            <Skeleton className="h-4 w-[150px]" />
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className="flex gap-2">
+                                                <Skeleton className="h-8 w-[60px]" />
+                                                <Skeleton className="h-8 w-[60px]" />
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </div>
+                </CardContent>
+            </Card>
+        );
+    }
+
     return (
         <>
             <Card>
@@ -130,45 +185,59 @@ export function AdminPetTable({ pets }: AdminPetTableProps) {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Nome</TableHead>
-                                    <TableHead>Espécie</TableHead>
-                                    <TableHead>Raça</TableHead>
-                                    <TableHead>Idade</TableHead>
-                                    <TableHead>Peso</TableHead>
-                                    <TableHead>Dono</TableHead>
-                                    <TableHead>Contato</TableHead>
-                                    <TableHead>Ações</TableHead>
+                                    <TableHead className="hidden sm:table-cell">Espécie</TableHead>
+                                    <TableHead className="hidden md:table-cell">Raça</TableHead>
+                                    <TableHead className="hidden lg:table-cell">Idade</TableHead>
+                                    <TableHead className="hidden lg:table-cell">Peso</TableHead>
+                                    <TableHead className="hidden md:table-cell">Dono</TableHead>
+                                    <TableHead className="hidden sm:table-cell">Contato</TableHead>
+                                    <TableHead className="text-right">Ações</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
                                 {pets.map((pet) => (
                                     <TableRow key={pet.id}>
-                                        <TableCell>{pet.name}</TableCell>
-                                        <TableCell>{getSpeciesLabel(pet.species)}</TableCell>
-                                        <TableCell>{pet.breed || "-"}</TableCell>
-                                        <TableCell>{pet.age ? `${pet.age} anos` : "-"}</TableCell>
-                                        <TableCell>{pet.weight ? `${pet.weight}kg` : "-"}</TableCell>
-                                        <TableCell>{pet.user.name}</TableCell>
                                         <TableCell>
+                                            {pet.name}
+                                            <div className="sm:hidden">
+                                                <span className="text-sm text-muted-foreground block">
+                                                    {getSpeciesLabel(pet.species)}
+                                                    {pet.breed && ` - ${pet.breed}`}
+                                                </span>
+                                            </div>
+                                            <div className="md:hidden mt-1">
+                                                <span className="text-sm text-muted-foreground block">
+                                                    {pet.user.name}
+                                                </span>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="hidden sm:table-cell">{getSpeciesLabel(pet.species)}</TableCell>
+                                        <TableCell className="hidden md:table-cell">{pet.breed || "-"}</TableCell>
+                                        <TableCell className="hidden lg:table-cell">{pet.age ? `${pet.age} anos` : "-"}</TableCell>
+                                        <TableCell className="hidden lg:table-cell">{pet.weight ? `${pet.weight}kg` : "-"}</TableCell>
+                                        <TableCell className="hidden md:table-cell">{pet.user.name}</TableCell>
+                                        <TableCell className="hidden sm:table-cell">
                                             {pet.user.phone}
                                             <br />
                                             {pet.user.email}
                                         </TableCell>
-                                        <TableCell>
-                                            <Button
-                                                variant="outline"
-                                                size="sm"
-                                                className="mr-2"
-                                                onClick={() => handleEdit(pet)}
-                                            >
-                                                Editar
-                                            </Button>
-                                            <Button
-                                                variant="destructive"
-                                                size="sm"
-                                                onClick={() => handleDelete(pet.id)}
-                                            >
-                                                Excluir
-                                            </Button>
+                                        <TableCell className="text-right">
+                                            <div className="flex justify-end gap-2">
+                                                <Button
+                                                    variant="outline"
+                                                    size="sm"
+                                                    onClick={() => handleEdit(pet)}
+                                                >
+                                                    Editar
+                                                </Button>
+                                                <Button
+                                                    variant="destructive"
+                                                    size="sm"
+                                                    onClick={() => handleDelete(pet.id)}
+                                                >
+                                                    Excluir
+                                                </Button>
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 ))}

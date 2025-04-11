@@ -2,7 +2,7 @@ import { db } from '@/app/db';
 import { usersTable, petsTable, appointmentsTable } from '@/app/db/schema';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { sql } from 'drizzle-orm';
-import SignOutButton from '@/components/SignOutButton';
+import SignOutButton from '@/components/auth/SignOutButton';
 import { ChangePasswordDialog } from '@/components/admin/ChangePasswordDialog';
 
 export default async function AdminDashboard() {

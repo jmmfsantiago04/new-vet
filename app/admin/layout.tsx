@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import SignOutButton from '@/components/SignOutButton';
+import SignOutButton from '@/components/auth/SignOutButton';
 import {
     Card,
     CardContent,
@@ -37,8 +37,8 @@ export default function AdminLayout({
                                 key={item.href}
                                 href={item.href}
                                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
-                                        ? 'bg-[var(--primary)] text-white'
-                                        : 'text-gray-600 hover:bg-gray-100'
+                                    ? 'bg-[var(--primary)] text-white'
+                                    : 'text-gray-600 hover:bg-gray-100'
                                     }`}
                             >
                                 <span>{item.icon}</span>
@@ -63,8 +63,8 @@ export default function AdminLayout({
                                     key={item.href}
                                     href={item.href}
                                     className={`flex flex-col items-center p-2 rounded-lg ${isActive
-                                            ? 'text-[var(--primary)]'
-                                            : 'text-gray-600'
+                                        ? 'text-[var(--primary)]'
+                                        : 'text-gray-600'
                                         }`}
                                 >
                                     <span className="text-xl">{item.icon}</span>

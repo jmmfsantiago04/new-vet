@@ -71,7 +71,7 @@ export function ChangePasswordDialog() {
                     Alterar Senha
                 </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle>Alterar Senha</DialogTitle>
                     <DialogDescription>
@@ -91,6 +91,7 @@ export function ChangePasswordDialog() {
                                         <Input
                                             type="password"
                                             placeholder="Digite sua senha atual"
+                                            className="w-full"
                                             {...field}
                                         />
                                     </FormControl>
@@ -109,6 +110,7 @@ export function ChangePasswordDialog() {
                                         <Input
                                             type="password"
                                             placeholder="Digite a nova senha"
+                                            className="w-full"
                                             {...field}
                                         />
                                     </FormControl>
@@ -127,6 +129,7 @@ export function ChangePasswordDialog() {
                                         <Input
                                             type="password"
                                             placeholder="Confirme a nova senha"
+                                            className="w-full"
                                             {...field}
                                         />
                                     </FormControl>
@@ -135,15 +138,19 @@ export function ChangePasswordDialog() {
                             )}
                         />
 
-                        <div className="flex justify-end gap-4 pt-4">
+                        <div className="flex flex-col-reverse sm:flex-row justify-end gap-4 pt-4">
                             <Button
                                 type="button"
                                 variant="outline"
                                 onClick={() => setIsOpen(false)}
+                                className="w-full sm:w-auto"
                             >
                                 Cancelar
                             </Button>
-                            <Button type="submit">
+                            <Button
+                                type="submit"
+                                className="w-full sm:w-auto"
+                            >
                                 Salvar
                             </Button>
                         </div>

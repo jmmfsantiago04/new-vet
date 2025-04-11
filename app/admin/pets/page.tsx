@@ -10,8 +10,10 @@ export default async function AdminPetsPage() {
         with: {
             user: {
                 columns: {
+                    id: true,
                     name: true,
                     email: true,
+                    phone: true,
                 }
             }
         }

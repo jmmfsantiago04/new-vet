@@ -56,18 +56,18 @@ export default function LoginForm() {
     };
 
     return (
-        <Card className="w-full max-w-md mx-auto">
-            <CardHeader>
-                <CardTitle>Entrar</CardTitle>
-                <CardDescription>
+        <Card className="w-[95%] max-w-md mx-auto shadow-lg">
+            <CardHeader className="space-y-2">
+                <CardTitle className="text-2xl sm:text-3xl font-bold">Entrar</CardTitle>
+                <CardDescription className="text-sm sm:text-base">
                     Acesse sua conta para gerenciar seus pets
                 </CardDescription>
             </CardHeader>
             <CardContent>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
                         {form.formState.errors.root && (
-                            <div className="bg-destructive/10 border border-destructive/20 text-destructive p-4 rounded-lg text-sm">
+                            <div className="bg-destructive/10 border border-destructive/20 text-destructive p-3 sm:p-4 rounded-lg text-sm sm:text-base">
                                 {form.formState.errors.root.message}
                             </div>
                         )}
@@ -76,16 +76,17 @@ export default function LoginForm() {
                             control={form.control}
                             name="email"
                             render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>E-mail</FormLabel>
+                                <FormItem className="space-y-2 sm:space-y-3">
+                                    <FormLabel className="text-sm sm:text-base">E-mail</FormLabel>
                                     <FormControl>
                                         <Input
                                             type="email"
                                             placeholder="Digite seu e-mail"
+                                            className="w-full text-sm sm:text-base p-2 sm:p-3"
                                             {...field}
                                         />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage className="text-xs sm:text-sm" />
                                 </FormItem>
                             )}
                         />
@@ -94,24 +95,26 @@ export default function LoginForm() {
                             control={form.control}
                             name="password"
                             render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Senha</FormLabel>
+                                <FormItem className="space-y-2 sm:space-y-3">
+                                    <FormLabel className="text-sm sm:text-base">Senha</FormLabel>
                                     <FormControl>
                                         <Input
                                             type="password"
                                             placeholder="Digite sua senha"
+                                            className="w-full text-sm sm:text-base p-2 sm:p-3"
                                             {...field}
                                         />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage className="text-xs sm:text-sm" />
                                 </FormItem>
                             )}
                         />
 
                         <Button
                             type="submit"
-                            className="w-full"
+                            className="w-full mt-6 text-sm sm:text-base py-5 sm:py-6"
                             disabled={isPending}
+                            size="lg"
                         >
                             {isPending ? 'Entrando...' : 'Entrar'}
                         </Button>
