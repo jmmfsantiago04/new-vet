@@ -1,4 +1,4 @@
-import { integer, pgTable, varchar, text, timestamp, date, time, serial } from "drizzle-orm/pg-core";
+import { integer, pgTable, varchar, text, timestamp, date, time, serial, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { z } from 'zod';
 import { relations, sql } from 'drizzle-orm';
@@ -45,6 +45,26 @@ export const appointmentsTable = pgTable('appointments', {
     createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
 });
 
+// FAQ Schema
+export const faqCategoriesTable = pgTable('faq_categories', {
+    id: serial('id').primaryKey(),
+    category: varchar({ length: 255 }).notNull(),
+    order: integer('order').notNull().default(0),
+    createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
+});
+
+export const faqItemsTable = pgTable('faq_items', {
+    id: serial('id').primaryKey(),
+    categoryId: integer('category_id').notNull().references(() => faqCategoriesTable.id),
+    question: text('question').notNull(),
+    answer: text('answer').notNull(),
+    order: integer('order').notNull().default(0),
+    isActive: boolean('is_active').notNull().default(true),
+    createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
+});
+
 // Relations
 export const usersRelations = relations(usersTable, ({ many }) => ({
     pets: many(petsTable),
@@ -67,6 +87,18 @@ export const appointmentsRelations = relations(appointmentsTable, ({ one }) => (
     pet: one(petsTable, {
         fields: [appointmentsTable.petId],
         references: [petsTable.id],
+    }),
+}));
+
+// FAQ Relations
+export const faqCategoriesRelations = relations(faqCategoriesTable, ({ many }) => ({
+    items: many(faqItemsTable),
+}));
+
+export const faqItemsRelations = relations(faqItemsTable, ({ one }) => ({
+    category: one(faqCategoriesTable, {
+        fields: [faqItemsTable.categoryId],
+        references: [faqCategoriesTable.id],
     }),
 }));
 
@@ -120,9 +152,29 @@ export const signInSchema = z.object({
     password: z.string().min(1, 'Senha é obrigatória'),
 });
 
+// FAQ Zod Schemas
+export const insertFaqCategorySchema = createInsertSchema(faqCategoriesTable, {
+    category: (schema) => schema.min(2, 'Category must be at least 2 characters').max(255, 'Category name is too long'),
+    order: (schema) => schema.optional(),
+});
+
+export const insertFaqItemSchema = createInsertSchema(faqItemsTable, {
+    question: (schema) => schema.min(10, 'Question must be at least 10 characters'),
+    answer: (schema) => schema.min(10, 'Answer must be at least 10 characters'),
+    order: (schema) => schema.optional(),
+    isActive: (schema) => schema.optional(),
+});
+
+export const selectFaqCategorySchema = createSelectSchema(faqCategoriesTable);
+export const selectFaqItemSchema = createSelectSchema(faqItemsTable);
+
 // Types
 export type InsertPet = z.infer<typeof insertPetSchema>;
 export type SelectPet = z.infer<typeof selectPetSchema>;
 export type SignUpInput = z.infer<typeof signUpSchema>;
 export type SignInInput = z.infer<typeof signInSchema>;
-export type AppointmentInput = z.infer<typeof appointmentSchema>; 
+export type AppointmentInput = z.infer<typeof appointmentSchema>;
+export type InsertFaqCategory = z.infer<typeof insertFaqCategorySchema>;
+export type InsertFaqItem = z.infer<typeof insertFaqItemSchema>;
+export type SelectFaqCategory = z.infer<typeof selectFaqCategorySchema>;
+export type SelectFaqItem = z.infer<typeof selectFaqItemSchema>; 

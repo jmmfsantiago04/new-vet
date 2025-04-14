@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export default function DocProfileAbout() {
     return (
-        <section className="py-16">
+        <section className="py-16 bg-blue-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-xl">

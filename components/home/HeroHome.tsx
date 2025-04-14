@@ -2,14 +2,14 @@ import Image from 'next/image'
 
 export default function HeroHome() {
     return (
-        <section className="py-8 sm:py-12 md:py-16 lg:py-24 bg-[var(--primary)]">
+        <section className="py-8 sm:py-12 md:py-16 lg:py-24 bg-blue-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-12 items-center">
-                    <div className="text-white space-y-4 sm:space-y-6">
-                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
+                    <div className="space-y-4 sm:space-y-6">
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-[var(--primary)]">
                             Atendimento Veterinário Profissional no Conforto da Sua Casa
                         </h1>
-                        <p className="text-base sm:text-lg text-white/90 max-w-xl">
+                        <p className="text-base sm:text-lg text-[var(--text-secondary)] max-w-xl">
                             Conecte-se com veterinários licenciados 24/7 para orientação especializada,
                             consultas e tranquilidade no cuidado com seu pet.
                         </p>
@@ -18,7 +18,7 @@ export default function HeroHome() {
                                 href="https://wa.me/5571991916499"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center bg-white text-[var(--primary)] px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl text-base sm:text-lg font-semibold hover:bg-[var(--accent)] hover:text-white transition-all duration-300"
+                                className="inline-flex items-center bg-[var(--primary)] text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl text-base sm:text-lg font-semibold hover:bg-[var(--primary)]/90 shadow-lg hover:shadow-xl transition-all duration-300"
                             >
                                 Começar Agora
                                 <span className="ml-2">→</span>

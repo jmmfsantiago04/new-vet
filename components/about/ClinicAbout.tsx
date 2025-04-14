@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export default function ClinicAbout() {
     return (
-        <section className="py-16">
+        <section className="py-16 bg-blue-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="bg-white rounded-2xl shadow-lg p-8">
                     <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-6">
