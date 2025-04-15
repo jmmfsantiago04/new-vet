@@ -4,6 +4,9 @@ import { neon } from '@neondatabase/serverless';
 import bcrypt from 'bcrypt';
 import { usersTable, UserRole } from './schema';
 import * as schema from './schema';
+import { seedUsers } from './seed/users';
+import { seedFaq } from './seed/faq';
+import { seedBlog } from './seed/blog';
 
 if (!process.env.DATABASE_URL) {
     throw new Error('DATABASE_URL environment variable is required');
@@ -14,38 +17,20 @@ export const db = drizzle(sql, { schema });
 
 async function main() {
     try {
-        // Check if admin already exists
-        const existingAdmin = await db.query.usersTable.findFirst({
-            where: (users, { eq }) => eq(users.email, 'admin@vetpay.com')
-        });
+        // Seed users first (they are required for other relations)
+        await seedUsers();
 
-        if (existingAdmin) {
-            console.log('Admin user already exists:', existingAdmin.email);
-            return;
-        }
+        // Seed FAQ data
+        await seedFaq();
 
-        // Hash the admin password
-        const hashedPassword = await bcrypt.hash('Admin@123', 10);
+        // Seed Blog data
+        await seedBlog();
 
-        // Create admin user
-        const [admin] = await db
-            .insert(usersTable)
-            .values({
-                name: 'Admin',
-                email: 'admin@vetpay.com',
-                phone: '+5571999999999',
-                password: hashedPassword,
-                role: UserRole.ADMIN,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-            })
-            .returning();
-
-        console.log('Admin user created successfully:', admin.email);
+        console.log('✅ Database seeded successfully');
+        process.exit(0);
     } catch (error) {
         console.error('Error seeding database:', error);
-    } finally {
-        process.exit(0);
+        process.exit(1);
     }
 }
 

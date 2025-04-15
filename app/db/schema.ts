@@ -65,6 +65,29 @@ export const faqItemsTable = pgTable('faq_items', {
     updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
 });
 
+// Blog Schema
+export const blogCategoriesTable = pgTable('blog_categories', {
+    id: serial('id').primaryKey(),
+    name: varchar({ length: 255 }).notNull(),
+    slug: varchar({ length: 255 }).notNull().unique(),
+    createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
+});
+
+export const blogPostsTable = pgTable('blog_posts', {
+    id: serial('id').primaryKey(),
+    slug: varchar({ length: 255 }).notNull().unique(),
+    title: varchar({ length: 255 }).notNull(),
+    summary: text('summary').notNull(),
+    content: text('content').notNull(),
+    imageUrl: varchar({ length: 255 }).notNull(),
+    categoryId: integer('category_id').notNull().references(() => blogCategoriesTable.id),
+    publishedAt: timestamp('published_at').notNull(),
+    isPublished: boolean('is_published').notNull().default(false),
+    createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
+});
+
 // Relations
 export const usersRelations = relations(usersTable, ({ many }) => ({
     pets: many(petsTable),
@@ -99,6 +122,18 @@ export const faqItemsRelations = relations(faqItemsTable, ({ one }) => ({
     category: one(faqCategoriesTable, {
         fields: [faqItemsTable.categoryId],
         references: [faqCategoriesTable.id],
+    }),
+}));
+
+// Blog Relations
+export const blogCategoriesRelations = relations(blogCategoriesTable, ({ many }) => ({
+    posts: many(blogPostsTable),
+}));
+
+export const blogPostsRelations = relations(blogPostsTable, ({ one }) => ({
+    category: one(blogCategoriesTable, {
+        fields: [blogPostsTable.categoryId],
+        references: [blogCategoriesTable.id],
     }),
 }));
 
@@ -168,6 +203,23 @@ export const insertFaqItemSchema = createInsertSchema(faqItemsTable, {
 export const selectFaqCategorySchema = createSelectSchema(faqCategoriesTable);
 export const selectFaqItemSchema = createSelectSchema(faqItemsTable);
 
+// Blog Zod Schemas
+export const insertBlogCategorySchema = createInsertSchema(blogCategoriesTable, {
+    name: (schema) => schema.min(2, 'Name must be at least 2 characters').max(255, 'Name is too long'),
+    slug: (schema) => schema.min(2, 'Slug must be at least 2 characters').max(255, 'Slug is too long'),
+});
+
+export const insertBlogPostSchema = createInsertSchema(blogPostsTable, {
+    title: (schema) => schema.min(5, 'Title must be at least 5 characters').max(255, 'Title is too long'),
+    summary: (schema) => schema.min(10, 'Summary must be at least 10 characters'),
+    content: (schema) => schema.min(50, 'Content must be at least 50 characters'),
+    slug: (schema) => schema.min(2, 'Slug must be at least 2 characters').max(255, 'Slug is too long'),
+    imageUrl: (schema) => schema.url('Image URL must be a valid URL'),
+});
+
+export const selectBlogCategorySchema = createSelectSchema(blogCategoriesTable);
+export const selectBlogPostSchema = createSelectSchema(blogPostsTable);
+
 // Types
 export type InsertPet = z.infer<typeof insertPetSchema>;
 export type SelectPet = z.infer<typeof selectPetSchema>;
@@ -177,4 +229,8 @@ export type AppointmentInput = z.infer<typeof appointmentSchema>;
 export type InsertFaqCategory = z.infer<typeof insertFaqCategorySchema>;
 export type InsertFaqItem = z.infer<typeof insertFaqItemSchema>;
 export type SelectFaqCategory = z.infer<typeof selectFaqCategorySchema>;
-export type SelectFaqItem = z.infer<typeof selectFaqItemSchema>; 
+export type SelectFaqItem = z.infer<typeof selectFaqItemSchema>;
+export type InsertBlogCategory = z.infer<typeof insertBlogCategorySchema>;
+export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;
+export type SelectBlogCategory = z.infer<typeof selectBlogCategorySchema>;
+export type SelectBlogPost = z.infer<typeof selectBlogPostSchema>; 

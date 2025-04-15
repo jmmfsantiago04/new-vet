@@ -20,6 +20,7 @@ export default function AdminLayout({
         { href: '/admin/appointments', label: 'Consultas', icon: '📅' },
         { href: '/admin/users', label: 'Usuários', icon: '👥' },
         { href: '/admin/pets', label: 'Pets', icon: '🐾' },
+        { href: '/admin/blog', label: 'Blog', icon: '📝' },
         { href: '/admin/faq', label: 'FAQ', icon: '❓' },
     ];
 

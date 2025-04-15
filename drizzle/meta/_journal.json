@@ -57,6 +57,13 @@
       "when": 1744663546971,
       "tag": "0007_stormy_champions",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1744746169426,
+      "tag": "0008_short_black_panther",
+      "breakpoints": true
     }
   ]
 }

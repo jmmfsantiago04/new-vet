@@ -2,6 +2,8 @@ import { db } from '@/app/db';
 import { faqCategoriesTable, faqItemsTable } from '@/app/db/schema';
 import FAQTable from '@/components/admin/FAQTable';
 import FAQCreate from '@/components/admin/FAQCreate';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PlusCircle, ListFilter } from "lucide-react";
 
 export default async function FAQAdminPage() {
     // Fetch categories and items
@@ -17,10 +19,26 @@ export default async function FAQAdminPage() {
                 </p>
             </div>
 
-            <div className="space-y-8">
-                <FAQCreate categories={categories} />
-                <FAQTable categories={categories} items={items} />
-            </div>
+            <Tabs defaultValue="list" className="space-y-6">
+                <TabsList>
+                    <TabsTrigger value="list" className="flex items-center gap-2">
+                        <ListFilter className="h-4 w-4" />
+                        <span>Lista de Perguntas</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="create" className="flex items-center gap-2">
+                        <PlusCircle className="h-4 w-4" />
+                        <span>Criar Pergunta</span>
+                    </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="list" className="space-y-4">
+                    <FAQTable categories={categories} items={items} />
+                </TabsContent>
+
+                <TabsContent value="create" className="space-y-4">
+                    <FAQCreate categories={categories} />
+                </TabsContent>
+            </Tabs>
         </div>
     );
 } 
