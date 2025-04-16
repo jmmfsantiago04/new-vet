@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import * as motion from "motion/react-client"
 
 export default function ExpertiseAbout() {
     const expertiseItems = [
@@ -25,18 +26,64 @@ export default function ExpertiseAbout() {
     return (
         <section className="py-16 bg-blue-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="text-3xl font-bold text-center text-[var(--text-primary)] mb-12">
+                <motion.h2
+                    className="text-3xl font-bold text-center text-[var(--text-primary)] mb-12"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                >
                     Nossa Expertise
-                </h2>
+                </motion.h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {expertiseItems.map((item, index) => (
-                        <div key={index} className="bg-white rounded-xl p-6 shadow-lg">
-                            <div className="text-4xl mb-4">{item.icon}</div>
-                            <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-2">
+                        <motion.div
+                            key={index}
+                            className="bg-white rounded-xl p-6 shadow-lg"
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: index * 0.2 }}
+                            whileHover={{
+                                scale: 1.05,
+                                transition: { duration: 0.2 }
+                            }}
+                        >
+                            <motion.div
+                                className="text-4xl mb-4"
+                                initial={{ scale: 0.8 }}
+                                whileInView={{ scale: 1 }}
+                                viewport={{ once: true }}
+                                whileHover={{
+                                    scale: 1.1,
+                                    transition: {
+                                        type: "spring",
+                                        stiffness: 400,
+                                        damping: 10
+                                    }
+                                }}
+                            >
+                                {item.icon}
+                            </motion.div>
+                            <motion.h3
+                                className="text-xl font-semibold text-[var(--text-primary)] mb-2"
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.3 + index * 0.2 }}
+                            >
                                 {item.title}
-                            </h3>
-                            <p className="text-[var(--text-secondary)]">{item.description}</p>
-                        </div>
+                            </motion.h3>
+                            <motion.p
+                                className="text-[var(--text-secondary)]"
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: 0.4 + index * 0.2 }}
+                            >
+                                {item.description}
+                            </motion.p>
+                        </motion.div>
                     ))}
                 </div>
             </div>
