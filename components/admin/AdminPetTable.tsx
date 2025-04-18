@@ -11,8 +11,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { format } from "date-fns";
-import { ptBR } from 'date-fns/locale';
 import {
     Dialog,
     DialogContent,
@@ -24,13 +22,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
 import { toast } from "sonner";
 import { updatePet, deletePet } from "@/app/actions/pets";
 import { useRouter } from "next/navigation";

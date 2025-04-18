@@ -85,6 +85,37 @@ export async function seedBlog() {
                     publishedAt: new Date('2024-02-20'),
                     isPublished: true,
                 },
+                // Adding 3 new blog posts
+                {
+                    slug: "exercicios-para-pets",
+                    title: "Exercícios Essenciais para Manter seu Pet Ativo",
+                    summary: "Descubra as melhores atividades físicas para diferentes tipos e idades de pets, garantindo uma vida mais saudável e feliz para seu companheiro.",
+                    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    imageUrl: "/blog/pet-exercise.jpg",
+                    categoryId: categoryMap.get('Saúde')!,
+                    publishedAt: new Date('2024-03-18'),
+                    isPublished: true,
+                },
+                {
+                    slug: "ansiedade-separacao",
+                    title: "Como Lidar com a Ansiedade de Separação em Pets",
+                    summary: "Entenda os sinais de ansiedade de separação e aprenda técnicas eficazes para ajudar seu pet a se sentir mais seguro quando você não está por perto.",
+                    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    imageUrl: "/blog/anxiety.jpg",
+                    categoryId: categoryMap.get('Comportamento')!,
+                    publishedAt: new Date('2024-03-20'),
+                    isPublished: true,
+                },
+                {
+                    slug: "telemedicina-emergencias",
+                    title: "Telemedicina Veterinária em Situações de Emergência",
+                    summary: "Saiba como a telemedicina veterinária pode ser crucial em situações de emergência e como se preparar para usar esse serviço efetivamente.",
+                    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+                    imageUrl: "/blog/telehealth-emergency.jpg",
+                    categoryId: categoryMap.get('Telemedicina')!,
+                    publishedAt: new Date('2024-03-22'),
+                    isPublished: true,
+                },
             ]);
 
         console.log('✅ Blog data seeded successfully');
