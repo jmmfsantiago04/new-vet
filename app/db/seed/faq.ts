@@ -1,3 +1,4 @@
+
 import { db } from '@/app/db';
 import { faqCategoriesTable, faqItemsTable } from '@/app/db/schema';
 

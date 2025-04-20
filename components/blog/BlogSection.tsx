@@ -21,16 +21,18 @@ interface BlogSectionProps {
 
 function BlogSectionSkeleton() {
     return (
-        <section className="py-12 bg-blue-50">
+        <section className="py-8 sm:py-12 bg-blue-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-12">
-                    <Skeleton className="h-10 w-64 mx-auto mb-4" />
-                    <Skeleton className="h-6 w-full max-w-2xl mx-auto" />
+                <div className="text-center mb-8 sm:mb-12">
+                    <Skeleton className="h-8 sm:h-10 w-48 sm:w-64 mx-auto mb-4" />
+                    <Skeleton className="h-5 sm:h-6 w-full max-w-2xl mx-auto" />
                 </div>
 
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                     {[1, 2, 3, 4, 5, 6].map((index) => (
-                        <BlogCardSkeleton key={index} />
+                        <div key={index} className="w-full">
+                            <BlogCardSkeleton />
+                        </div>
                     ))}
                 </div>
             </div>
@@ -69,18 +71,18 @@ export async function BlogSection({ currentPage = 1, totalPages = 1 }: BlogSecti
         .offset(offset);
 
     return (
-        <section className="py-12 bg-blue-50">
+        <section className="py-8 sm:py-12 md:py-16 bg-blue-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <Suspense fallback={<BlogSectionSkeleton />}>
                     <motion.div
-                        className="text-center mb-12"
+                        className="text-center mb-8 sm:mb-12"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
                     >
                         <motion.h2
-                            className="text-3xl font-bold text-[var(--primary)]"
+                            className="text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--primary)]"
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 0.2 }}
@@ -88,7 +90,7 @@ export async function BlogSection({ currentPage = 1, totalPages = 1 }: BlogSecti
                             Blog Veterinário
                         </motion.h2>
                         <motion.p
-                            className="mt-4 text-lg text-[var(--text-secondary)]"
+                            className="mt-3 sm:mt-4 text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.4 }}
@@ -97,7 +99,7 @@ export async function BlogSection({ currentPage = 1, totalPages = 1 }: BlogSecti
                         </motion.p>
                     </motion.div>
 
-                    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 place-items-stretch">
                         {posts.map((post, index) => (
                             <motion.div
                                 key={post.id}
@@ -105,6 +107,7 @@ export async function BlogSection({ currentPage = 1, totalPages = 1 }: BlogSecti
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: index * 0.2 }}
+                                className="w-full h-full"
                             >
                                 <BlogCard
                                     slug={post.slug}
@@ -120,13 +123,13 @@ export async function BlogSection({ currentPage = 1, totalPages = 1 }: BlogSecti
 
                     {calculatedTotalPages > 1 && (
                         <motion.div
-                            className="mt-8"
+                            className="mt-8 sm:mt-12"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.6 }}
                         >
                             <Pagination>
-                                <PaginationContent>
+                                <PaginationContent className="flex-wrap gap-2">
                                     <PaginationItem>
                                         <PaginationPrevious
                                             href={currentPage > 1 ? `/blog?page=${currentPage - 1}` : '#'}

@@ -2,7 +2,7 @@
 
 import { useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { signOut } from '@/app/actions/auth';
+import { signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
@@ -18,9 +18,11 @@ export default function SignOutButton({ className }: SignOutButtonProps) {
     const handleSignOut = () => {
         startTransition(async () => {
             try {
-                await signOut();
+                await signOut({
+                    redirect: true,
+                    callbackUrl: '/login'
+                });
                 toast.success('Sessão encerrada com sucesso');
-                router.push('/login');
             } catch (error) {
                 console.error('Error signing out:', error);
                 toast.error('Erro ao encerrar sessão');

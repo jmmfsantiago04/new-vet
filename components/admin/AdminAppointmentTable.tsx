@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { format } from "date-fns";
-import { ptBR } from 'date-fns/locale';
 import {
     Dialog,
     DialogContent,

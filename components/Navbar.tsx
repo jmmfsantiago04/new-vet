@@ -2,10 +2,13 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import SignOutButton from './auth/SignOutButton'
 
 export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const pathname = usePathname()
+    const { data: session } = useSession()
 
     const handleLinkClick = () => {
         setIsMobileMenuOpen(false)
@@ -14,6 +17,9 @@ export default function Navbar() {
     useEffect(() => {
         setIsMobileMenuOpen(false)
     }, [pathname])
+
+    const dashboardLink = session?.user?.role === 'admin' ? '/admin' : '/cliente/dashboard'
+    const dashboardText = session?.user?.role === 'admin' ? 'Área Admin' : 'Área do Cliente'
 
     return (
         <nav className="bg-white shadow-lg sticky top-0 z-50">
@@ -60,17 +66,21 @@ export default function Navbar() {
                             Serviços
                         </Link>
                         <Link
-                            href="/cliente/dashboard"
+                            href={dashboardLink}
                             className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors font-medium"
                         >
-                            Área do Cliente
+                            {dashboardText}
                         </Link>
-                        <Link
-                            href="/signup"
-                            className="bg-[var(--primary)] text-white px-4 py-2 rounded-lg hover:bg-[var(--primary-light)] transition-colors font-medium"
-                        >
-                            Criar Conta
-                        </Link>
+                        {session ? (
+                            <SignOutButton />
+                        ) : (
+                            <Link
+                                href="/signup"
+                                className="bg-[var(--primary)] text-white px-4 py-2 rounded-lg hover:bg-[var(--primary-light)] transition-colors font-medium"
+                            >
+                                Criar Conta
+                            </Link>
+                        )}
                     </div>
 
                     {/* Botão do Menu Mobile */}
@@ -131,19 +141,23 @@ export default function Navbar() {
                                 Serviços
                             </Link>
                             <Link
-                                href="/cliente/dashboard"
+                                href={dashboardLink}
                                 onClick={handleLinkClick}
                                 className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors font-medium"
                             >
-                                Área do Cliente
+                                {dashboardText}
                             </Link>
-                            <Link
-                                href="/signup"
-                                onClick={handleLinkClick}
-                                className="bg-[var(--primary)] text-white px-4 py-2 rounded-lg hover:bg-[var(--primary-light)] transition-colors font-medium text-center"
-                            >
-                                Criar Conta
-                            </Link>
+                            {session ? (
+                                <SignOutButton className="w-full" />
+                            ) : (
+                                <Link
+                                    href="/signup"
+                                    onClick={handleLinkClick}
+                                    className="bg-[var(--primary)] text-white px-4 py-2 rounded-lg hover:bg-[var(--primary-light)] transition-colors font-medium text-center"
+                                >
+                                    Criar Conta
+                                </Link>
+                            )}
                         </div>
                     </div>
                 )}

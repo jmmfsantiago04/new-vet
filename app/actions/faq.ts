@@ -218,7 +218,8 @@ export async function getFaqItems(categoryId?: number) {
             .orderBy(faqItemsTable.order);
 
         if (categoryId) {
-            query = query.where(eq(faqItemsTable.categoryId, categoryId));
+            
+             = query.where(eq(faqItemsTable.categoryId, categoryId));
         }
 
         const items = await query;

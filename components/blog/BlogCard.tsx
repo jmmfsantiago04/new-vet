@@ -44,17 +44,18 @@ export function BlogCardSkeleton() {
 
 export function BlogCard({ slug, title, summary, date, imageUrl, category }: BlogCardProps) {
     return (
-        <Link href={`/blog/${slug}`}>
+        <Link href={`/blog/${slug}`} className="block w-full">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
                 whileHover={{ y: -5 }}
+                className="h-full"
             >
-                <Card className="overflow-hidden h-full transition-shadow hover:shadow-lg">
+                <Card className="overflow-hidden h-full transition-shadow hover:shadow-lg flex flex-col">
                     <motion.div
-                        className="relative aspect-[16/9]"
+                        className="relative aspect-[16/9] w-full overflow-hidden"
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.3 }}
                     >
@@ -62,26 +63,28 @@ export function BlogCard({ slug, title, summary, date, imageUrl, category }: Blo
                             src={imageUrl}
                             alt={title}
                             fill
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             className="object-cover"
+                            priority={false}
                         />
                     </motion.div>
-                    <CardHeader>
+                    <CardHeader className="flex-grow">
                         <motion.div
-                            className="flex items-center justify-between mb-2"
+                            className="flex items-center justify-between mb-2 flex-wrap gap-2"
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: 0.2 }}
                         >
-                            <Badge variant="secondary" className="bg-blue-100 text-blue-800 hover:bg-blue-100">
+                            <Badge variant="secondary" className="bg-blue-100 text-blue-800 hover:bg-blue-100 whitespace-nowrap">
                                 {category}
                             </Badge>
-                            <time className="text-sm text-muted-foreground">
+                            <time className="text-sm text-muted-foreground whitespace-nowrap">
                                 {date}
                             </time>
                         </motion.div>
                         <motion.h3
-                            className="text-xl font-bold text-[var(--primary)] line-clamp-2"
+                            className="text-base sm:text-lg md:text-xl font-bold text-[var(--primary)] line-clamp-2"
                             initial={{ opacity: 0, y: 10 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -92,7 +95,7 @@ export function BlogCard({ slug, title, summary, date, imageUrl, category }: Blo
                     </CardHeader>
                     <CardContent>
                         <motion.p
-                            className="text-muted-foreground line-clamp-3"
+                            className="text-sm sm:text-base text-muted-foreground line-clamp-3"
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}

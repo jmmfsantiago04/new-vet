@@ -61,6 +61,7 @@ export function ConditionsSection() {
                                         viewport={{ once: true }}
                                         transition={{ delay: 0.2 + index * 0.1 }}
                                     >
+
                                         <CardTitle className="text-lg md:text-xl text-[var(--primary)]">
                                             {item.category}
                                         </CardTitle>
