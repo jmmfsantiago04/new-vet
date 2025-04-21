@@ -1,9 +1,57 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import SignOutButton from './auth/SignOutButton'
+
+const navLinks = [
+    { href: "/about", text: "Sobre" },
+    { href: "/blog", text: "Blog" },
+    { href: "/faq", text: "Dúvidas" },
+    { href: "/services", text: "Serviços" }
+]
+
+interface NavLinkProps {
+    href: string
+    text: string
+    onClick?: () => void
+    className?: string
+}
+
+const NavLink = ({ href, text, onClick, className = "" }: NavLinkProps) => (
+    <Link
+        href={href}
+        onClick={onClick}
+        className={`text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors font-medium ${className}`}
+    >
+        {text}
+    </Link>
+)
+
+const MenuButton = ({ isOpen, onClick }: { isOpen: boolean; onClick: () => void }) => (
+    <button
+        onClick={onClick}
+        className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors"
+    >
+        <svg
+            className="h-6 w-6"
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+        >
+            {isOpen ? (
+                <path d="M6 18L18 6M6 6l12 12" />
+            ) : (
+                <path d="M4 6h16M4 12h16M4 18h16" />
+            )}
+        </svg>
+    </button>
+)
 
 export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -25,52 +73,32 @@ export default function Navbar() {
         <nav className="bg-white shadow-lg sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div className="flex justify-between items-center">
-                    {/* Links da Esquerda - Ocultos no Mobile */}
+                    {/* Left Links - Hidden on Mobile */}
                     <div className="hidden md:flex items-center space-x-8">
-                        <Link
-                            href="/about"
-                            className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors font-medium"
-                        >
-                            Sobre
-                        </Link>
-                        <Link
-                            href="/blog"
-                            className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors font-medium"
-                        >
-                            Blog
-                        </Link>
-                        <Link
-                            href="/faq"
-                            className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors font-medium"
-                        >
-                            Dúvidas
-                        </Link>
+                        {navLinks.slice(0, 3).map(link => (
+                            <NavLink key={link.href} {...link} />
+                        ))}
                     </div>
 
-                    {/* Logo Central */}
-                    <div className="flex items-center">
-                        <Link
-                            href="/"
-                            className="text-2xl font-bold text-[var(--primary)] hover:text-[var(--primary-light)] transition-colors"
-                        >
-                            VetPay
-                        </Link>
-                    </div>
+                    {/* Center Logo */}
+                    <Link
+                        href="/"
+                        className="relative w-45 h-20 hover:opacity-90 transition-opacity  p-2 rounded-lg"
+                    >
+                        <Image
+                            src="/LogoBranco.png"
+                            alt="VetPay Logo"
+                            fill
+                            style={{ objectFit: 'contain' }}
+                            priority
+                            className=""
+                        />
+                    </Link>
 
-                    {/* Links da Direita - Ocultos no Mobile */}
+                    {/* Right Links - Hidden on Mobile */}
                     <div className="hidden md:flex items-center space-x-8">
-                        <Link
-                            href="/services"
-                            className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors font-medium"
-                        >
-                            Serviços
-                        </Link>
-                        <Link
-                            href={dashboardLink}
-                            className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors font-medium"
-                        >
-                            {dashboardText}
-                        </Link>
+                        <NavLink href="/services" text="Serviços" />
+                        <NavLink href={dashboardLink} text={dashboardText} />
                         {session ? (
                             <SignOutButton />
                         ) : (
@@ -83,70 +111,31 @@ export default function Navbar() {
                         )}
                     </div>
 
-                    {/* Botão do Menu Mobile */}
+                    {/* Mobile Menu Button */}
                     <div className="md:hidden">
-                        <button
+                        <MenuButton
+                            isOpen={isMobileMenuOpen}
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors"
-                        >
-                            <svg
-                                className="h-6 w-6"
-                                fill="none"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                {isMobileMenuOpen ? (
-                                    <path d="M6 18L18 6M6 6l12 12" />
-                                ) : (
-                                    <path d="M4 6h16M4 12h16M4 18h16" />
-                                )}
-                            </svg>
-                        </button>
+                        />
                     </div>
                 </div>
 
-                {/* Menu Mobile */}
+                {/* Mobile Menu */}
                 {isMobileMenuOpen && (
                     <div className="md:hidden mt-4 pb-4">
                         <div className="flex flex-col space-y-4">
-                            <Link
-                                href="/about"
-                                onClick={handleLinkClick}
-                                className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors font-medium"
-                            >
-                                Sobre
-                            </Link>
-                            <Link
-                                href="/blog"
-                                onClick={handleLinkClick}
-                                className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors font-medium"
-                            >
-                                Blog
-                            </Link>
-                            <Link
-                                href="/faq"
-                                onClick={handleLinkClick}
-                                className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors font-medium"
-                            >
-                                Dúvidas
-                            </Link>
-                            <Link
-                                href="/services"
-                                onClick={handleLinkClick}
-                                className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors font-medium"
-                            >
-                                Serviços
-                            </Link>
-                            <Link
+                            {navLinks.map(link => (
+                                <NavLink
+                                    key={link.href}
+                                    {...link}
+                                    onClick={handleLinkClick}
+                                />
+                            ))}
+                            <NavLink
                                 href={dashboardLink}
+                                text={dashboardText}
                                 onClick={handleLinkClick}
-                                className="text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors font-medium"
-                            >
-                                {dashboardText}
-                            </Link>
+                            />
                             {session ? (
                                 <SignOutButton className="w-full" />
                             ) : (

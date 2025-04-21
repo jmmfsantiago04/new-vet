@@ -10,6 +10,43 @@ import { Skeleton } from "@/components/ui/skeleton"
 import * as motion from "motion/react-client"
 import { Suspense } from "react"
 
+const fadeUpAnimation = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true }
+}
+
+const scaleAnimation = {
+    initial: { scale: 0 },
+    whileInView: { scale: 1 },
+    viewport: { once: true }
+}
+
+const fadeInAnimation = {
+    initial: { opacity: 0 },
+    whileInView: { opacity: 1 },
+    viewport: { once: true }
+}
+
+const slideLeftAnimation = {
+    initial: { opacity: 0, x: -20 },
+    whileInView: { opacity: 1, x: 0 },
+    viewport: { once: true }
+}
+
+const dotAnimation = {
+    initial: { scale: 0 },
+    whileInView: { scale: 1 },
+    viewport: { once: true }
+}
+
+const pawAnimation = {
+    initial: { opacity: 0, scale: 0 },
+    whileInView: { opacity: 1, scale: 1 },
+    viewport: { once: true },
+    animate: { y: [0, -10, 0] }
+}
+
 interface FaqItem {
     id: number;
     question: string;
@@ -67,18 +104,14 @@ export default function FaqContent({ categories }: FaqContentProps) {
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                 <Suspense fallback={<FaqSkeleton />}>
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        {...fadeUpAnimation}
                         transition={{ duration: 0.5 }}
                     >
                         <Card className="shadow-xl border-t-4 border-t-[var(--primary)]">
                             <CardHeader className="text-center space-y-4">
                                 <motion.div
                                     className="flex justify-center"
-                                    initial={{ scale: 0 }}
-                                    whileInView={{ scale: 1 }}
-                                    viewport={{ once: true }}
+                                    {...scaleAnimation}
                                     transition={{ duration: 0.5, delay: 0.2 }}
                                 >
                                     <Badge variant="default" className="bg-[var(--primary)]/10 text-[var(--primary)] hover:bg-[var(--primary)]/20 text-sm px-4 py-1">
@@ -86,9 +119,7 @@ export default function FaqContent({ categories }: FaqContentProps) {
                                     </Badge>
                                 </motion.div>
                                 <motion.div
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
+                                    {...fadeUpAnimation}
                                     transition={{ duration: 0.5, delay: 0.3 }}
                                 >
                                     <CardTitle className="text-2xl sm:text-3xl font-bold text-[var(--primary)]">
@@ -96,9 +127,7 @@ export default function FaqContent({ categories }: FaqContentProps) {
                                     </CardTitle>
                                 </motion.div>
                                 <motion.div
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
+                                    {...fadeUpAnimation}
                                     transition={{ duration: 0.5, delay: 0.4 }}
                                 >
                                     <CardDescription className="text-[var(--text-secondary)] max-w-2xl mx-auto">
@@ -112,23 +141,17 @@ export default function FaqContent({ categories }: FaqContentProps) {
                                         <motion.div
                                             key={category.id}
                                             className="space-y-4"
-                                            initial={{ opacity: 0, x: -20 }}
-                                            whileInView={{ opacity: 1, x: 0 }}
-                                            viewport={{ once: true }}
+                                            {...slideLeftAnimation}
                                             transition={{ duration: 0.5, delay: categoryIndex * 0.2 }}
                                         >
                                             <motion.h3
                                                 className="text-lg font-semibold text-[var(--primary)] mb-4 flex items-center gap-2"
-                                                initial={{ opacity: 0 }}
-                                                whileInView={{ opacity: 1 }}
-                                                viewport={{ once: true }}
+                                                {...fadeInAnimation}
                                                 transition={{ duration: 0.5, delay: 0.2 + categoryIndex * 0.1 }}
                                             >
                                                 <motion.span
                                                     className="w-1.5 h-1.5 bg-[var(--primary)] rounded-full"
-                                                    initial={{ scale: 0 }}
-                                                    whileInView={{ scale: 1 }}
-                                                    viewport={{ once: true }}
+                                                    {...dotAnimation}
                                                     transition={{ duration: 0.3, delay: 0.3 + categoryIndex * 0.1 }}
                                                 ></motion.span>
                                                 {category.category}
@@ -139,9 +162,7 @@ export default function FaqContent({ categories }: FaqContentProps) {
                                                     .map((item, itemIndex) => (
                                                         <motion.div
                                                             key={item.id}
-                                                            initial={{ opacity: 0, y: 10 }}
-                                                            whileInView={{ opacity: 1, y: 0 }}
-                                                            viewport={{ once: true }}
+                                                            {...fadeUpAnimation}
                                                             transition={{ duration: 0.5, delay: 0.4 + (categoryIndex * 0.1) + (itemIndex * 0.1) }}
                                                         >
                                                             <AccordionItem
@@ -168,19 +189,14 @@ export default function FaqContent({ categories }: FaqContentProps) {
                     {/* Decorative elements with motion */}
                     <motion.div
                         className="mt-12 flex justify-center space-x-8"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 0.5, y: 0 }}
-                        viewport={{ once: true }}
+                        {...fadeUpAnimation}
                         transition={{ duration: 0.5, delay: 0.6 }}
                     >
                         {[0, 1, 2].map((index) => (
                             <motion.span
                                 key={index}
                                 className="w-12 h-12 text-3xl"
-                                initial={{ opacity: 0, scale: 0 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                viewport={{ once: true }}
-                                animate={{ y: [0, -10, 0] }}
+                                {...pawAnimation}
                                 transition={{
                                     duration: 2,
                                     repeat: Infinity,

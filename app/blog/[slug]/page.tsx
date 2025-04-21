@@ -7,14 +7,16 @@ import { blogPostsTable, blogCategoriesTable } from "@/app/db/schema"
 import { eq } from "drizzle-orm"
 
 interface BlogPostPageProps {
-    params: {
+    params: Promise<{
         slug: string
-    }
+    }>
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+    const { slug } = await params;
+
     const post = await db.query.blogPostsTable.findFirst({
-        where: (posts, { eq }) => eq(posts.slug, params.slug)
+        where: (posts, { eq }) => eq(posts.slug, slug)
     });
 
     if (!post) {
@@ -31,6 +33,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
+    const { slug } = await params;
+
     const post = await db
         .select({
             title: blogPostsTable.title,
@@ -42,7 +46,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         })
         .from(blogPostsTable)
         .leftJoin(blogCategoriesTable, eq(blogPostsTable.categoryId, blogCategoriesTable.id))
-        .where(eq(blogPostsTable.slug, params.slug))
+        .where(eq(blogPostsTable.slug, slug))
         .limit(1);
 
     if (!post[0]) {
@@ -72,6 +76,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         alt={blogPost.title}
                         fill
                         className="object-cover rounded-lg"
+                        priority
                     />
                 </div>
 
@@ -79,7 +84,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     <p className="text-[var(--text-secondary)] mb-6">
                         {blogPost.summary}
                     </p>
-                    <div className="text-[var(--text-secondary)]"
+                    <div
+                        className="text-[var(--text-secondary)]"
                         dangerouslySetInnerHTML={{ __html: blogPost.content }}
                     />
                 </div>

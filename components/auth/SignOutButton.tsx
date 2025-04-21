@@ -1,7 +1,6 @@
 'use client';
 
 import { useTransition } from 'react';
-import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -12,7 +11,6 @@ interface SignOutButtonProps {
 }
 
 export default function SignOutButton({ className }: SignOutButtonProps) {
-    const router = useRouter();
     const [isPending, startTransition] = useTransition();
 
     const handleSignOut = () => {

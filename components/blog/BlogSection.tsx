@@ -14,6 +14,28 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 
+const fadeUpAnimation = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true }
+}
+
+const titleAnimation = {
+    initial: { scale: 0.8, opacity: 0 },
+    animate: { scale: 1, opacity: 1 }
+}
+
+const cardAnimation = {
+    initial: { opacity: 0, y: 30 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true }
+}
+
+const paginationAnimation = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 }
+}
+
 interface BlogSectionProps {
     currentPage?: number
     totalPages?: number
@@ -76,23 +98,19 @@ export async function BlogSection({ currentPage = 1, totalPages = 1 }: BlogSecti
                 <Suspense fallback={<BlogSectionSkeleton />}>
                     <motion.div
                         className="text-center mb-8 sm:mb-12"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        {...fadeUpAnimation}
                         transition={{ duration: 0.5 }}
                     >
                         <motion.h2
                             className="text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--primary)]"
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
+                            {...titleAnimation}
                             transition={{ delay: 0.2 }}
                         >
                             Blog Veterinário
                         </motion.h2>
                         <motion.p
                             className="mt-3 sm:mt-4 text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            {...fadeUpAnimation}
                             transition={{ delay: 0.4 }}
                         >
                             Dicas e informações importantes para o bem-estar do seu pet
@@ -103,9 +121,7 @@ export async function BlogSection({ currentPage = 1, totalPages = 1 }: BlogSecti
                         {posts.map((post, index) => (
                             <motion.div
                                 key={post.id}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
+                                {...cardAnimation}
                                 transition={{ duration: 0.5, delay: index * 0.2 }}
                                 className="w-full h-full"
                             >
@@ -124,8 +140,7 @@ export async function BlogSection({ currentPage = 1, totalPages = 1 }: BlogSecti
                     {calculatedTotalPages > 1 && (
                         <motion.div
                             className="mt-8 sm:mt-12"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            {...paginationAnimation}
                             transition={{ delay: 0.6 }}
                         >
                             <Pagination>

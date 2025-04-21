@@ -5,6 +5,39 @@ import Image from "next/image"
 import Link from "next/link"
 import * as motion from "motion/react-client"
 
+const cardAnimation = {
+    initial: { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    whileHover: { y: -5 }
+}
+
+const imageAnimation = {
+    whileHover: { scale: 1.05 }
+}
+
+const headerAnimation = {
+    initial: { opacity: 0, x: -20 },
+    whileInView: { opacity: 1, x: 0 },
+    viewport: { once: true }
+}
+
+const titleAnimation = {
+    initial: { opacity: 0, y: 10 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true }
+}
+
+const fadeInAnimation = {
+    initial: { opacity: 0 },
+    whileInView: { opacity: 1 },
+    viewport: { once: true }
+}
+
+const readMoreAnimation = {
+    whileHover: { x: 5 }
+}
+
 interface BlogCardProps {
     slug: string
     title: string
@@ -46,17 +79,14 @@ export function BlogCard({ slug, title, summary, date, imageUrl, category }: Blo
     return (
         <Link href={`/blog/${slug}`} className="block w-full">
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                {...cardAnimation}
                 transition={{ duration: 0.5 }}
-                whileHover={{ y: -5 }}
                 className="h-full"
             >
                 <Card className="overflow-hidden h-full transition-shadow hover:shadow-lg flex flex-col">
                     <motion.div
                         className="relative aspect-[16/9] w-full overflow-hidden"
-                        whileHover={{ scale: 1.05 }}
+                        {...imageAnimation}
                         transition={{ duration: 0.3 }}
                     >
                         <Image
@@ -71,9 +101,7 @@ export function BlogCard({ slug, title, summary, date, imageUrl, category }: Blo
                     <CardHeader className="flex-grow">
                         <motion.div
                             className="flex items-center justify-between mb-2 flex-wrap gap-2"
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
+                            {...headerAnimation}
                             transition={{ duration: 0.5, delay: 0.2 }}
                         >
                             <Badge variant="secondary" className="bg-blue-100 text-blue-800 hover:bg-blue-100 whitespace-nowrap">
@@ -85,9 +113,7 @@ export function BlogCard({ slug, title, summary, date, imageUrl, category }: Blo
                         </motion.div>
                         <motion.h3
                             className="text-base sm:text-lg md:text-xl font-bold text-[var(--primary)] line-clamp-2"
-                            initial={{ opacity: 0, y: 10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
+                            {...titleAnimation}
                             transition={{ duration: 0.5, delay: 0.3 }}
                         >
                             {title}
@@ -96,9 +122,7 @@ export function BlogCard({ slug, title, summary, date, imageUrl, category }: Blo
                     <CardContent>
                         <motion.p
                             className="text-sm sm:text-base text-muted-foreground line-clamp-3"
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
+                            {...fadeInAnimation}
                             transition={{ duration: 0.5, delay: 0.4 }}
                         >
                             {summary}
@@ -107,7 +131,7 @@ export function BlogCard({ slug, title, summary, date, imageUrl, category }: Blo
                     <CardFooter>
                         <motion.span
                             className="text-sm font-medium text-[var(--primary)]"
-                            whileHover={{ x: 5 }}
+                            {...readMoreAnimation}
                             transition={{ duration: 0.2 }}
                         >
                             Ler mais →

@@ -23,7 +23,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import { changePassword } from '@/app/actions/auth';
+import { changePassword } from '@/app/actions/change-password';
 
 const changePasswordSchema = z.object({
     currentPassword: z.string().min(1, 'Senha atual é obrigatória'),

@@ -11,6 +11,43 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
+const cardAnimation = {
+    initial: { opacity: 0, y: 30 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true }
+}
+
+const iconAnimation = {
+    initial: { scale: 0.8 },
+    whileInView: { scale: 1 },
+    viewport: { once: true },
+    whileHover: {
+        scale: 1.1,
+        transition: {
+            type: "spring",
+            stiffness: 400,
+            damping: 10
+        }
+    }
+}
+
+const fadeInAnimation = {
+    initial: { opacity: 0 },
+    whileInView: { opacity: 1 },
+    viewport: { once: true }
+}
+
+const slideLeftAnimation = {
+    initial: { opacity: 0, x: -20 },
+    whileInView: { opacity: 1, x: 0 },
+    viewport: { once: true }
+}
+
+const buttonAnimation = {
+    whileHover: { scale: 1.02 },
+    whileTap: { scale: 0.98 }
+}
+
 interface Service {
     id: number
     name: string
@@ -87,33 +124,19 @@ export function ServicesSection() {
                     {services.map((service, index) => (
                         <motion.div
                             key={service.id}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
+                            {...cardAnimation}
                             transition={{ duration: 0.5, delay: index * 0.2 }}
                         >
                             <Card className="w-full max-w-sm mx-auto bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
                                 <CardHeader className="space-y-2">
                                     <motion.div
                                         className="text-5xl mb-2"
-                                        initial={{ scale: 0.8 }}
-                                        whileInView={{ scale: 1 }}
-                                        viewport={{ once: true }}
-                                        whileHover={{
-                                            scale: 1.1,
-                                            transition: {
-                                                type: "spring",
-                                                stiffness: 400,
-                                                damping: 10
-                                            }
-                                        }}
+                                        {...iconAnimation}
                                     >
                                         {service.icon}
                                     </motion.div>
                                     <motion.div
-                                        initial={{ opacity: 0 }}
-                                        whileInView={{ opacity: 1 }}
-                                        viewport={{ once: true }}
+                                        {...fadeInAnimation}
                                         transition={{ delay: 0.2 + index * 0.1 }}
                                     >
                                         <CardTitle className="text-xl font-bold text-[var(--primary)]">{service.name}</CardTitle>
@@ -125,9 +148,7 @@ export function ServicesSection() {
                                 <CardContent className="pt-4">
                                     <motion.div
                                         className="flex justify-between items-center mb-6"
-                                        initial={{ opacity: 0, x: -20 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        viewport={{ once: true }}
+                                        {...slideLeftAnimation}
                                         transition={{ delay: 0.3 + index * 0.1 }}
                                     >
                                         <Badge variant="default" className="text-base px-2.5 py-0.5 bg-[var(--primary)] hover:bg-[var(--primary)]/90">
@@ -139,18 +160,14 @@ export function ServicesSection() {
                                     </motion.div>
                                     <motion.ul
                                         className="space-y-2.5"
-                                        initial={{ opacity: 0 }}
-                                        whileInView={{ opacity: 1 }}
-                                        viewport={{ once: true }}
+                                        {...fadeInAnimation}
                                         transition={{ delay: 0.4 + index * 0.1 }}
                                     >
                                         {service.features.map((feature, featureIndex) => (
                                             <motion.li
                                                 key={featureIndex}
                                                 className="flex items-start gap-2 text-sm text-[var(--text-secondary)]"
-                                                initial={{ opacity: 0, x: -20 }}
-                                                whileInView={{ opacity: 1, x: 0 }}
-                                                viewport={{ once: true }}
+                                                {...slideLeftAnimation}
                                                 transition={{ delay: 0.4 + (featureIndex * 0.1) }}
                                             >
                                                 <svg
@@ -174,8 +191,7 @@ export function ServicesSection() {
                                 <CardFooter className="pt-4">
                                     <motion.div
                                         className="w-full"
-                                        whileHover={{ scale: 1.02 }}
-                                        whileTap={{ scale: 0.98 }}
+                                        {...buttonAnimation}
                                     >
                                         <Button asChild className="w-full bg-[var(--primary)] hover:bg-[var(--primary)]/90">
                                             <Link
