@@ -48,33 +48,32 @@ export default function DocProfileAbout() {
                         >
                             Dr. Mauricio Faria
                         </motion.h2>
-                        <div className="space-y-4 text-[var(--text-secondary)]">
-                            {[
-                                `Com mais de 30 anos de serviço dedicado à medicina veterinária, o Dr. Mauricio
-                                Faria é um nome respeitado no cuidado com animais em Salvador. Sua jornada na
-                                medicina veterinária começou com uma paixão por ajudar animais e evoluiu para
-                                uma missão de tornar o atendimento veterinário de qualidade mais acessível a todos.`,
+                        {[
+                            `Com mais de 30 anos de serviço dedicado à medicina veterinária, o Dr. Mauricio
+                            Faria é um nome respeitado no cuidado com animais em Salvador. Sua jornada na
+                            medicina veterinária começou com uma paixão por ajudar animais e evoluiu para
+                            uma missão de tornar o atendimento veterinário de qualidade mais acessível a todos.`,
 
-                                `Como fundador e veterinário chefe de sua clínica de sucesso em Salvador, Dr.
-                                Faria já tratou milhares de pets, adquirindo uma experiência inestimável em vários
-                                aspectos da medicina veterinária. Sua expertise abrange desde cuidados de rotina até
-                                procedimentos médicos complexos, sempre mantendo os mais altos padrões da prática veterinária.`,
+                            `Como fundador e veterinário chefe de sua clínica de sucesso em Salvador, Dr.
+                            Faria já tratou milhares de pets, adquirindo uma experiência inestimável em vários
+                            aspectos da medicina veterinária. Sua expertise abrange desde cuidados de rotina até
+                            procedimentos médicos complexos, sempre mantendo os mais altos padrões da prática veterinária.`,
 
-                                `Reconhecendo as necessidades em constante mudança dos tutores de pets e as vantagens da
-                                tecnologia moderna, Dr. Faria expandiu seus serviços para incluir consultas online.
-                                Essa abordagem inovadora permite que ele alcance mais tutores de pets enquanto mantém
-                                o mesmo nível de atendimento profissional e atenção personalizada que tem definido
-                                sua prática por três décadas.`
-                            ].map((text, index) => (
-                                <motion.p
-                                    key={index}
-                                    {...fadeUpAnimation}
-                                    transition={{ delay: 0.5 + (index * 0.1) }}
-                                >
-                                    {text}
-                                </motion.p>
-                            ))}
-                        </div>
+                            `Reconhecendo as necessidades em constante mudança dos tutores de pets e as vantagens da
+                            tecnologia moderna, Dr. Faria expandiu seus serviços para incluir consultas online.
+                            Essa abordagem inovadora permite que ele alcance mais tutores de pets enquanto mantém
+                            o mesmo nível de atendimento profissional e atenção personalizada que tem definido
+                            sua prática por três décadas.`
+                        ].map((text, index) => (
+                            <motion.p
+                                key={index}
+                                className="text-[var(--text-secondary)] mb-4 last:mb-0"
+                                {...fadeUpAnimation}
+                                transition={{ delay: 0.5 + (index * 0.1) }}
+                            >
+                                {text}
+                            </motion.p>
+                        ))}
                     </motion.div>
                 </div>
             </div>

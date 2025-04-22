@@ -78,10 +78,10 @@ export function BlogCardSkeleton() {
 export function BlogCard({ slug, title, summary, date, imageUrl, category }: BlogCardProps) {
     return (
         <Link href={`/blog/${slug}`} className="block w-full">
-            <motion.div
+            <motion.article
+                className="h-full"
                 {...cardAnimation}
                 transition={{ duration: 0.5 }}
-                className="h-full"
             >
                 <Card className="overflow-hidden h-full transition-shadow hover:shadow-lg flex flex-col">
                     <motion.div
@@ -138,7 +138,7 @@ export function BlogCard({ slug, title, summary, date, imageUrl, category }: Blo
                         </motion.span>
                     </CardFooter>
                 </Card>
-            </motion.div>
+            </motion.article>
         </Link>
     )
 } 

@@ -186,173 +186,171 @@ export default function BlogTable({ posts, categories }: BlogTableProps) {
                                 <TableCell>
                                     {post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('pt-BR') : '-'}
                                 </TableCell>
-                                <TableCell className="text-right">
-                                    <div className="flex justify-end gap-2">
-                                        <Dialog onOpenChange={(open) => {
-                                            if (open) {
-                                                setEditingPost(post);
-                                                form.reset({
-                                                    title: post.title,
-                                                    slug: post.slug,
-                                                    summary: post.summary,
-                                                    imageUrl: post.imageUrl,
-                                                    categoryId: post.categoryId,
-                                                });
-                                            }
-                                        }}>
-                                            <DialogTrigger asChild>
-                                                <Button variant="ghost" size="icon">
-                                                    <Edit className="h-4 w-4" />
-                                                </Button>
-                                            </DialogTrigger>
-                                            <DialogContent>
-                                                <DialogHeader>
-                                                    <DialogTitle>Editar Post</DialogTitle>
-                                                </DialogHeader>
-                                                <Form {...form}>
-                                                    <form onSubmit={form.handleSubmit(handleEdit)} className="space-y-4">
-                                                        <FormField
-                                                            control={form.control}
-                                                            name="categoryId"
-                                                            render={({ field }) => (
-                                                                <FormItem>
-                                                                    <FormLabel>Categoria</FormLabel>
-                                                                    <Select
-                                                                        onValueChange={(value) => field.onChange(Number(value))}
-                                                                        defaultValue={field.value?.toString()}
-                                                                    >
-                                                                        <FormControl>
-                                                                            <SelectTrigger>
-                                                                                <SelectValue placeholder="Selecione uma categoria" />
-                                                                            </SelectTrigger>
-                                                                        </FormControl>
-                                                                        <SelectContent>
-                                                                            {categories.map((category) => (
-                                                                                <SelectItem
-                                                                                    key={category.id}
-                                                                                    value={category.id.toString()}
-                                                                                >
-                                                                                    {category.name}
-                                                                                </SelectItem>
-                                                                            ))}
-                                                                        </SelectContent>
-                                                                    </Select>
-                                                                    <FormMessage />
-                                                                </FormItem>
-                                                            )}
-                                                        />
-
-                                                        <FormField
-                                                            control={form.control}
-                                                            name="title"
-                                                            render={({ field }) => (
-                                                                <FormItem>
-                                                                    <FormLabel>Título</FormLabel>
+                                <TableCell className="text-right flex justify-end gap-2">
+                                    <Dialog onOpenChange={(open) => {
+                                        if (open) {
+                                            setEditingPost(post);
+                                            form.reset({
+                                                title: post.title,
+                                                slug: post.slug,
+                                                summary: post.summary,
+                                                imageUrl: post.imageUrl,
+                                                categoryId: post.categoryId,
+                                            });
+                                        }
+                                    }}>
+                                        <DialogTrigger asChild>
+                                            <Button variant="ghost" size="icon">
+                                                <Edit className="h-4 w-4" />
+                                            </Button>
+                                        </DialogTrigger>
+                                        <DialogContent>
+                                            <DialogHeader>
+                                                <DialogTitle>Editar Post</DialogTitle>
+                                            </DialogHeader>
+                                            <Form {...form}>
+                                                <form onSubmit={form.handleSubmit(handleEdit)} className="space-y-4">
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="categoryId"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Categoria</FormLabel>
+                                                                <Select
+                                                                    onValueChange={(value) => field.onChange(Number(value))}
+                                                                    defaultValue={field.value?.toString()}
+                                                                >
                                                                     <FormControl>
-                                                                        <Input
-                                                                            {...field}
-                                                                            onChange={(e) => {
-                                                                                field.onChange(e);
-                                                                                const slug = generateSlug(e.target.value);
-                                                                                form.setValue('slug', slug);
-                                                                            }}
-                                                                        />
+                                                                        <SelectTrigger>
+                                                                            <SelectValue placeholder="Selecione uma categoria" />
+                                                                        </SelectTrigger>
                                                                     </FormControl>
-                                                                    <FormMessage />
-                                                                </FormItem>
-                                                            )}
-                                                        />
+                                                                    <SelectContent>
+                                                                        {categories.map((category) => (
+                                                                            <SelectItem
+                                                                                key={category.id}
+                                                                                value={category.id.toString()}
+                                                                            >
+                                                                                {category.name}
+                                                                            </SelectItem>
+                                                                        ))}
+                                                                    </SelectContent>
+                                                                </Select>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
 
-                                                        <FormField
-                                                            control={form.control}
-                                                            name="slug"
-                                                            render={({ field }) => (
-                                                                <FormItem>
-                                                                    <FormLabel>Slug</FormLabel>
-                                                                    <FormControl>
-                                                                        <Input {...field} />
-                                                                    </FormControl>
-                                                                    <FormMessage />
-                                                                </FormItem>
-                                                            )}
-                                                        />
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="title"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Título</FormLabel>
+                                                                <FormControl>
+                                                                    <Input
+                                                                        {...field}
+                                                                        onChange={(e) => {
+                                                                            field.onChange(e);
+                                                                            const slug = generateSlug(e.target.value);
+                                                                            form.setValue('slug', slug);
+                                                                        }}
+                                                                    />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
 
-                                                        <FormField
-                                                            control={form.control}
-                                                            name="summary"
-                                                            render={({ field }) => (
-                                                                <FormItem>
-                                                                    <FormLabel>Resumo</FormLabel>
-                                                                    <FormControl>
-                                                                        <Textarea
-                                                                            className="min-h-[100px]"
-                                                                            {...field}
-                                                                        />
-                                                                    </FormControl>
-                                                                    <FormMessage />
-                                                                </FormItem>
-                                                            )}
-                                                        />
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="slug"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Slug</FormLabel>
+                                                                <FormControl>
+                                                                    <Input {...field} />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
 
-                                                        <FormField
-                                                            control={form.control}
-                                                            name="content"
-                                                            render={({ field }) => (
-                                                                <FormItem>
-                                                                    <FormLabel>Conteúdo</FormLabel>
-                                                                    <FormControl>
-                                                                        <Textarea
-                                                                            className="min-h-[200px]"
-                                                                            {...field}
-                                                                        />
-                                                                    </FormControl>
-                                                                    <FormMessage />
-                                                                </FormItem>
-                                                            )}
-                                                        />
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="summary"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Resumo</FormLabel>
+                                                                <FormControl>
+                                                                    <Textarea
+                                                                        className="min-h-[100px]"
+                                                                        {...field}
+                                                                    />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
 
-                                                        <FormField
-                                                            control={form.control}
-                                                            name="imageUrl"
-                                                            render={({ field }) => (
-                                                                <FormItem>
-                                                                    <FormLabel>URL da Imagem</FormLabel>
-                                                                    <FormControl>
-                                                                        <Input {...field} />
-                                                                    </FormControl>
-                                                                    <FormMessage />
-                                                                </FormItem>
-                                                            )}
-                                                        />
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="content"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>Conteúdo</FormLabel>
+                                                                <FormControl>
+                                                                    <Textarea
+                                                                        className="min-h-[200px]"
+                                                                        {...field}
+                                                                    />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
 
-                                                        <Button type="submit" disabled={isSubmitting}>
-                                                            {isSubmitting ? 'Salvando...' : 'Salvar'}
-                                                        </Button>
-                                                    </form>
-                                                </Form>
-                                            </DialogContent>
-                                        </Dialog>
+                                                    <FormField
+                                                        control={form.control}
+                                                        name="imageUrl"
+                                                        render={({ field }) => (
+                                                            <FormItem>
+                                                                <FormLabel>URL da Imagem</FormLabel>
+                                                                <FormControl>
+                                                                    <Input {...field} />
+                                                                </FormControl>
+                                                                <FormMessage />
+                                                            </FormItem>
+                                                        )}
+                                                    />
 
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            onClick={() => handleTogglePublished(post.id)}
-                                        >
-                                            {post.isPublished ? (
-                                                <EyeOff className="h-4 w-4" />
-                                            ) : (
-                                                <Eye className="h-4 w-4" />
-                                            )}
-                                        </Button>
+                                                    <Button type="submit" disabled={isSubmitting}>
+                                                        {isSubmitting ? 'Salvando...' : 'Salvar'}
+                                                    </Button>
+                                                </form>
+                                            </Form>
+                                        </DialogContent>
+                                    </Dialog>
 
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            onClick={() => handleDelete(post.id)}
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    </div>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => handleTogglePublished(post.id)}
+                                    >
+                                        {post.isPublished ? (
+                                            <EyeOff className="h-4 w-4" />
+                                        ) : (
+                                            <Eye className="h-4 w-4" />
+                                        )}
+                                    </Button>
+
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => handleDelete(post.id)}
+                                    >
+                                        <Trash2 className="h-4 w-4" />
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                         ))}

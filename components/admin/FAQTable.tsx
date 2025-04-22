@@ -359,103 +359,101 @@ export default function FAQTable({ categories, items }: FAQTableProps) {
                                                         {item.isActive ? 'Ativo' : 'Inativo'}
                                                     </Badge>
                                                 </TableCell>
-                                                <TableCell className="text-right">
-                                                    <div className="flex justify-end gap-2">
-                                                        <Dialog onOpenChange={(open) => {
-                                                            if (open) {
-                                                                setEditingItem(item);
-                                                                itemForm.reset({
-                                                                    categoryId: item.categoryId,
-                                                                    question: item.question,
-                                                                    answer: item.answer,
-                                                                });
-                                                            }
-                                                        }}>
-                                                            <DialogTrigger asChild>
-                                                                <Button variant="ghost" size="icon">
-                                                                    <Edit className="h-4 w-4" />
-                                                                </Button>
-                                                            </DialogTrigger>
-                                                            <DialogContent>
-                                                                <DialogHeader>
-                                                                    <DialogTitle>Editar Pergunta</DialogTitle>
-                                                                </DialogHeader>
-                                                                <Form {...itemForm}>
-                                                                    <form onSubmit={itemForm.handleSubmit(handleEditItem)} className="space-y-4">
-                                                                        <FormField
-                                                                            control={itemForm.control}
-                                                                            name="categoryId"
-                                                                            render={({ field }) => (
-                                                                                <FormItem>
-                                                                                    <FormLabel>Categoria</FormLabel>
-                                                                                    <Select
-                                                                                        onValueChange={(value) => field.onChange(Number(value))}
-                                                                                        defaultValue={field.value?.toString()}
-                                                                                    >
-                                                                                        <FormControl>
-                                                                                            <SelectTrigger>
-                                                                                                <SelectValue placeholder="Selecione uma categoria" />
-                                                                                            </SelectTrigger>
-                                                                                        </FormControl>
-                                                                                        <SelectContent>
-                                                                                            {categories.map((cat) => (
-                                                                                                <SelectItem
-                                                                                                    key={cat.id}
-                                                                                                    value={cat.id.toString()}
-                                                                                                >
-                                                                                                    {cat.category}
-                                                                                                </SelectItem>
-                                                                                            ))}
-                                                                                        </SelectContent>
-                                                                                    </Select>
-                                                                                    <FormMessage />
-                                                                                </FormItem>
-                                                                            )}
-                                                                        />
-                                                                        <FormField
-                                                                            control={itemForm.control}
-                                                                            name="question"
-                                                                            render={({ field }) => (
-                                                                                <FormItem>
-                                                                                    <FormLabel>Pergunta</FormLabel>
+                                                <TableCell className="text-right flex justify-end gap-2">
+                                                    <Dialog onOpenChange={(open) => {
+                                                        if (open) {
+                                                            setEditingItem(item);
+                                                            itemForm.reset({
+                                                                categoryId: item.categoryId,
+                                                                question: item.question,
+                                                                answer: item.answer,
+                                                            });
+                                                        }
+                                                    }}>
+                                                        <DialogTrigger asChild>
+                                                            <Button variant="ghost" size="icon">
+                                                                <Edit className="h-4 w-4" />
+                                                            </Button>
+                                                        </DialogTrigger>
+                                                        <DialogContent>
+                                                            <DialogHeader>
+                                                                <DialogTitle>Editar Pergunta</DialogTitle>
+                                                            </DialogHeader>
+                                                            <Form {...itemForm}>
+                                                                <form onSubmit={itemForm.handleSubmit(handleEditItem)} className="space-y-4">
+                                                                    <FormField
+                                                                        control={itemForm.control}
+                                                                        name="categoryId"
+                                                                        render={({ field }) => (
+                                                                            <FormItem>
+                                                                                <FormLabel>Categoria</FormLabel>
+                                                                                <Select
+                                                                                    onValueChange={(value) => field.onChange(Number(value))}
+                                                                                    defaultValue={field.value?.toString()}
+                                                                                >
                                                                                     <FormControl>
-                                                                                        <Input {...field} />
+                                                                                        <SelectTrigger>
+                                                                                            <SelectValue placeholder="Selecione uma categoria" />
+                                                                                        </SelectTrigger>
                                                                                     </FormControl>
-                                                                                    <FormMessage />
-                                                                                </FormItem>
-                                                                            )}
-                                                                        />
-                                                                        <FormField
-                                                                            control={itemForm.control}
-                                                                            name="answer"
-                                                                            render={({ field }) => (
-                                                                                <FormItem>
-                                                                                    <FormLabel>Resposta</FormLabel>
-                                                                                    <FormControl>
-                                                                                        <Textarea
-                                                                                            className="min-h-[100px]"
-                                                                                            {...field}
-                                                                                        />
-                                                                                    </FormControl>
-                                                                                    <FormMessage />
-                                                                                </FormItem>
-                                                                            )}
-                                                                        />
-                                                                        <Button type="submit" disabled={isSubmitting}>
-                                                                            {isSubmitting ? 'Salvando...' : 'Salvar'}
-                                                                        </Button>
-                                                                    </form>
-                                                                </Form>
-                                                            </DialogContent>
-                                                        </Dialog>
-                                                        <Button
-                                                            variant="ghost"
-                                                            size="icon"
-                                                            onClick={() => handleDeleteItem(item.id)}
-                                                        >
-                                                            <Trash2 className="h-4 w-4" />
-                                                        </Button>
-                                                    </div>
+                                                                                    <SelectContent>
+                                                                                        {categories.map((cat) => (
+                                                                                            <SelectItem
+                                                                                                key={cat.id}
+                                                                                                value={cat.id.toString()}
+                                                                                            >
+                                                                                                {cat.category}
+                                                                                            </SelectItem>
+                                                                                        ))}
+                                                                                    </SelectContent>
+                                                                                </Select>
+                                                                                <FormMessage />
+                                                                            </FormItem>
+                                                                        )}
+                                                                    />
+                                                                    <FormField
+                                                                        control={itemForm.control}
+                                                                        name="question"
+                                                                        render={({ field }) => (
+                                                                            <FormItem>
+                                                                                <FormLabel>Pergunta</FormLabel>
+                                                                                <FormControl>
+                                                                                    <Input {...field} />
+                                                                                </FormControl>
+                                                                                <FormMessage />
+                                                                            </FormItem>
+                                                                        )}
+                                                                    />
+                                                                    <FormField
+                                                                        control={itemForm.control}
+                                                                        name="answer"
+                                                                        render={({ field }) => (
+                                                                            <FormItem>
+                                                                                <FormLabel>Resposta</FormLabel>
+                                                                                <FormControl>
+                                                                                    <Textarea
+                                                                                        className="min-h-[100px]"
+                                                                                        {...field}
+                                                                                    />
+                                                                                </FormControl>
+                                                                                <FormMessage />
+                                                                            </FormItem>
+                                                                        )}
+                                                                    />
+                                                                    <Button type="submit" disabled={isSubmitting}>
+                                                                        {isSubmitting ? 'Salvando...' : 'Salvar'}
+                                                                    </Button>
+                                                                </form>
+                                                            </Form>
+                                                        </DialogContent>
+                                                    </Dialog>
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        onClick={() => handleDeleteItem(item.id)}
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </Button>
                                                 </TableCell>
                                             </TableRow>
                                         ))}

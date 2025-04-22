@@ -252,22 +252,20 @@ export function AdminAppointmentTable({ appointments, isLoading = false }: Admin
                         </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
-                        <div className="grid gap-2">
-                            <Select
-                                value={newStatus}
-                                onValueChange={setNewStatus}
-                            >
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Selecione o status" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="pending">Pendente</SelectItem>
-                                    <SelectItem value="confirmed">Confirmada</SelectItem>
-                                    <SelectItem value="done">Realizada</SelectItem>
-                                    <SelectItem value="cancelled">Cancelada</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
+                        <Select
+                            value={newStatus}
+                            onValueChange={setNewStatus}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Selecione o status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="pending">Pendente</SelectItem>
+                                <SelectItem value="confirmed">Confirmada</SelectItem>
+                                <SelectItem value="done">Realizada</SelectItem>
+                                <SelectItem value="cancelled">Cancelada</SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
                     <DialogFooter>
                         <Button variant="outline" onClick={() => setIsStatusDialogOpen(false)}>

@@ -16,19 +16,64 @@ export const authOptions: NextAuthOptions = {
             name: 'credentials',
             credentials: {
                 email: { label: "Email", type: "email" },
-                password: { label: "Password", type: "password" }
+                password: { label: "Password", type: "password" },
+                name: { label: "Name", type: "text" },
+                phone: { label: "Phone", type: "text" },
+                isSignUp: { label: "Is Sign Up", type: "boolean" }
             },
             async authorize(credentials) {
-                if (!credentials?.email || !credentials?.password) return null;
+                if (!credentials?.email || !credentials?.password) {
+                    throw new Error('Email e senha são obrigatórios');
+                }
 
+                // Handle sign up
+                if (credentials.isSignUp === 'true') {
+                    const existingUser = await db.query.usersTable.findFirst({
+                        where: eq(usersTable.email, credentials.email),
+                    });
+
+                    if (existingUser) {
+                        throw new Error('Este email já está em uso');
+                    }
+
+                    if (!credentials.name || !credentials.phone) {
+                        throw new Error('Nome e telefone são obrigatórios');
+                    }
+
+                    const hashedPassword = await bcrypt.hash(credentials.password, 10);
+                    const [newUser] = await db.insert(usersTable)
+                        .values({
+                            name: credentials.name,
+                            email: credentials.email,
+                            phone: credentials.phone,
+                            password: hashedPassword,
+                            role: "user",
+                            createdAt: new Date(),
+                            updatedAt: new Date(),
+                        })
+                        .returning();
+
+                    return {
+                        id: String(newUser.id),
+                        email: newUser.email,
+                        name: newUser.name,
+                        role: newUser.role,
+                    };
+                }
+
+                // Handle sign in
                 const user = await db.query.usersTable.findFirst({
                     where: eq(usersTable.email, credentials.email),
                 });
 
-                if (!user || !user.password) return null;
+                if (!user || !user.password) {
+                    throw new Error('Email ou senha inválidos');
+                }
 
                 const passwordMatch = await bcrypt.compare(credentials.password, user.password);
-                if (!passwordMatch) return null;
+                if (!passwordMatch) {
+                    throw new Error('Email ou senha inválidos');
+                }
 
                 return {
                     id: String(user.id),

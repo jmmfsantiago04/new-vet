@@ -3,7 +3,8 @@
 import { db } from '@/app/db';
 import { usersTable } from '@/app/db/schema';
 import { eq } from 'drizzle-orm';
-import { getSession } from '@/app/lib/session';
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { revalidatePath } from 'next/cache';
 
 interface UpdateUserData {
@@ -14,8 +15,13 @@ interface UpdateUserData {
 
 export async function updateUser(userId: number, data: UpdateUserData) {
     try {
-        const session = await getSession();
-        if (!session || session.role !== 'admin') {
+        const session = await getServerSession(authOptions);
+        if (!session?.user?.id) {
+            return { error: 'Não autorizado' };
+        }
+
+        // Allow users to update their own profile or admins to update any profile
+        if (parseInt(session.user.id) !== userId && session.user.role !== 'admin') {
             return { error: 'Não autorizado' };
         }
 
@@ -38,6 +44,7 @@ export async function updateUser(userId: number, data: UpdateUserData) {
             })
             .where(eq(usersTable.id, userId));
 
+        revalidatePath('/cliente/dashboard/profile');
         revalidatePath('/admin/users');
         return { success: true };
     } catch (error) {
@@ -48,8 +55,8 @@ export async function updateUser(userId: number, data: UpdateUserData) {
 
 export async function deleteUser(userId: number) {
     try {
-        const session = await getSession();
-        if (!session || session.role !== 'admin') {
+        const session = await getServerSession(authOptions);
+        if (!session || session.user.role !== 'admin') {
             return { error: 'Não autorizado' };
         }
 

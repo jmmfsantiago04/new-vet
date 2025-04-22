@@ -118,22 +118,22 @@ export default function FaqContent({ categories }: FaqContentProps) {
                                         FAQ
                                     </Badge>
                                 </motion.div>
-                                <motion.div
+
+                                <motion.h2
+                                    className="text-2xl sm:text-3xl font-bold text-[var(--primary)]"
                                     {...fadeUpAnimation}
                                     transition={{ duration: 0.5, delay: 0.3 }}
                                 >
-                                    <CardTitle className="text-2xl sm:text-3xl font-bold text-[var(--primary)]">
-                                        Perguntas Frequentes
-                                    </CardTitle>
-                                </motion.div>
-                                <motion.div
+                                    Perguntas Frequentes
+                                </motion.h2>
+
+                                <motion.p
+                                    className="text-[var(--text-secondary)] max-w-2xl mx-auto"
                                     {...fadeUpAnimation}
                                     transition={{ duration: 0.5, delay: 0.4 }}
                                 >
-                                    <CardDescription className="text-[var(--text-secondary)] max-w-2xl mx-auto">
-                                        Encontre respostas rápidas para as dúvidas mais comuns sobre nossos serviços veterinários online
-                                    </CardDescription>
-                                </motion.div>
+                                    Encontre respostas rápidas para as dúvidas mais comuns sobre nossos serviços veterinários online
+                                </motion.p>
                             </CardHeader>
                             <CardContent className="pt-6">
                                 <div className="space-y-8">
@@ -153,30 +153,25 @@ export default function FaqContent({ categories }: FaqContentProps) {
                                                     className="w-1.5 h-1.5 bg-[var(--primary)] rounded-full"
                                                     {...dotAnimation}
                                                     transition={{ duration: 0.3, delay: 0.3 + categoryIndex * 0.1 }}
-                                                ></motion.span>
+                                                />
                                                 {category.category}
                                             </motion.h3>
                                             <Accordion type="single" collapsible className="w-full">
                                                 {category.items
                                                     .filter(item => item.isActive)
                                                     .map((item, itemIndex) => (
-                                                        <motion.div
+                                                        <AccordionItem
                                                             key={item.id}
-                                                            {...fadeUpAnimation}
-                                                            transition={{ duration: 0.5, delay: 0.4 + (categoryIndex * 0.1) + (itemIndex * 0.1) }}
+                                                            value={`item-${item.id}`}
+                                                            className="border-b border-gray-200 last:border-0"
                                                         >
-                                                            <AccordionItem
-                                                                value={`item-${item.id}`}
-                                                                className="border-b border-gray-200 last:border-0"
-                                                            >
-                                                                <AccordionTrigger className="text-[var(--primary)] hover:text-[var(--primary)]/90 text-left hover:no-underline">
-                                                                    {item.question}
-                                                                </AccordionTrigger>
-                                                                <AccordionContent className="text-[var(--text-secondary)] leading-relaxed">
-                                                                    {item.answer}
-                                                                </AccordionContent>
-                                                            </AccordionItem>
-                                                        </motion.div>
+                                                            <AccordionTrigger className="text-[var(--primary)] hover:text-[var(--primary)]/90 text-left hover:no-underline">
+                                                                {item.question}
+                                                            </AccordionTrigger>
+                                                            <AccordionContent className="text-[var(--text-secondary)] leading-relaxed">
+                                                                {item.answer}
+                                                            </AccordionContent>
+                                                        </AccordionItem>
                                                     ))}
                                             </Accordion>
                                         </motion.div>
@@ -186,7 +181,6 @@ export default function FaqContent({ categories }: FaqContentProps) {
                         </Card>
                     </motion.div>
 
-                    {/* Decorative elements with motion */}
                     <motion.div
                         className="mt-12 flex justify-center space-x-8"
                         {...fadeUpAnimation}
@@ -202,10 +196,7 @@ export default function FaqContent({ categories }: FaqContentProps) {
                                     repeat: Infinity,
                                     delay: index * 0.3,
                                     ease: "easeInOut",
-                                    opacity: {
-                                        duration: 0.6,
-                                        delay: 0.7 + index * 0.2,
-                                    },
+                                    opacity: { duration: 0.6, delay: 0.7 + index * 0.2 },
                                     scale: {
                                         duration: 0.6,
                                         delay: 0.7 + index * 0.2,
@@ -222,5 +213,5 @@ export default function FaqContent({ categories }: FaqContentProps) {
                 </Suspense>
             </div>
         </section>
-    )
+    );
 } 

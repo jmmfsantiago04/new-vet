@@ -74,25 +74,25 @@ export default function HomeServices() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
                     {services.map((service, index) => (
-                        <motion.div
+                        <motion.article
                             key={index}
                             className="p-6 sm:p-8 rounded-xl bg-white shadow-md hover:shadow-lg transition-all duration-300 flex flex-col h-full"
                             {...cardAnimation}
                             transition={{ duration: 0.5, delay: index * 0.2 }}
                         >
-                            <motion.div
+                            <motion.span
                                 className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl sm:text-2xl ${service.bgColor} text-white mb-4 sm:mb-6`}
                                 {...iconAnimation}
                             >
                                 {service.icon}
-                            </motion.div>
+                            </motion.span>
                             <h3 className="text-lg sm:text-xl font-semibold mb-2 sm:mb-3 text-[var(--primary)]">
                                 {service.title}
                             </h3>
                             <p className="text-[var(--text-secondary)] text-sm sm:text-base">
                                 {service.description}
                             </p>
-                        </motion.div>
+                        </motion.article>
                     ))}
                 </div>
             </div>

@@ -111,19 +111,17 @@ export default function ClinicAbout() {
                                 modernas são equipadas com equipamentos médicos de última geração e contam com
                                 profissionais experientes.
                             </motion.p>
-                            <div className="space-y-2">
-                                {contactInfo.map((info, index) => (
-                                    <motion.p
-                                        key={index}
-                                        className="flex items-center text-[var(--text-secondary)]"
-                                        {...slideLeftSmallAnimation}
-                                        transition={{ delay: 0.5 + (index * 0.1) }}
-                                    >
-                                        {info.icon}
-                                        {info.text}
-                                    </motion.p>
-                                ))}
-                            </div>
+                            {contactInfo.map((info, index) => (
+                                <motion.p
+                                    key={index}
+                                    className="flex items-center text-[var(--text-secondary)] mt-2"
+                                    {...slideLeftSmallAnimation}
+                                    transition={{ delay: 0.5 + (index * 0.1) }}
+                                >
+                                    {info.icon}
+                                    {info.text}
+                                </motion.p>
+                            ))}
                         </motion.div>
                         <motion.div
                             className="relative h-[200px] rounded-xl overflow-hidden"

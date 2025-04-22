@@ -248,77 +248,65 @@ export function AdminPetTable({ pets, isLoading = false }: AdminPetTableProps) {
                     </DialogHeader>
                     {editedPet && (
                         <div className="grid gap-4 py-4">
-                            <div className="grid gap-2">
-                                <Label htmlFor="name">Nome</Label>
-                                <Input
-                                    id="name"
-                                    value={editedPet.name}
-                                    onChange={(e) =>
-                                        setEditedPet({ ...editedPet, name: e.target.value })
-                                    }
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="species">Espécie</Label>
-                                <Input
-                                    id="species"
-                                    value={editedPet.species}
-                                    onChange={(e) =>
-                                        setEditedPet({ ...editedPet, species: e.target.value })
-                                    }
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="breed">Raça</Label>
-                                <Input
-                                    id="breed"
-                                    value={editedPet.breed || ""}
-                                    onChange={(e) =>
-                                        setEditedPet({ ...editedPet, breed: e.target.value })
-                                    }
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="age">Idade</Label>
-                                <Input
-                                    id="age"
-                                    type="number"
-                                    value={editedPet.age || ""}
-                                    onChange={(e) =>
-                                        setEditedPet({
-                                            ...editedPet,
-                                            age: e.target.value ? parseInt(e.target.value) : null,
-                                        })
-                                    }
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="weight">Peso (kg)</Label>
-                                <Input
-                                    id="weight"
-                                    type="number"
-                                    value={editedPet.weight || ""}
-                                    onChange={(e) =>
-                                        setEditedPet({
-                                            ...editedPet,
-                                            weight: e.target.value ? parseInt(e.target.value) : null,
-                                        })
-                                    }
-                                />
-                            </div>
-                            <div className="grid gap-2">
-                                <Label htmlFor="medicalHistory">Histórico Médico</Label>
-                                <Textarea
-                                    id="medicalHistory"
-                                    value={editedPet.medicalHistory || ""}
-                                    onChange={(e) =>
-                                        setEditedPet({
-                                            ...editedPet,
-                                            medicalHistory: e.target.value,
-                                        })
-                                    }
-                                />
-                            </div>
+                            <Label htmlFor="name">Nome</Label>
+                            <Input
+                                id="name"
+                                value={editedPet.name}
+                                onChange={(e) =>
+                                    setEditedPet({ ...editedPet, name: e.target.value })
+                                }
+                            />
+                            <Label htmlFor="species">Espécie</Label>
+                            <Input
+                                id="species"
+                                value={editedPet.species}
+                                onChange={(e) =>
+                                    setEditedPet({ ...editedPet, species: e.target.value })
+                                }
+                            />
+                            <Label htmlFor="breed">Raça</Label>
+                            <Input
+                                id="breed"
+                                value={editedPet.breed || ""}
+                                onChange={(e) =>
+                                    setEditedPet({ ...editedPet, breed: e.target.value })
+                                }
+                            />
+                            <Label htmlFor="age">Idade</Label>
+                            <Input
+                                id="age"
+                                type="number"
+                                value={editedPet.age || ""}
+                                onChange={(e) =>
+                                    setEditedPet({
+                                        ...editedPet,
+                                        age: e.target.value ? parseInt(e.target.value) : null,
+                                    })
+                                }
+                            />
+                            <Label htmlFor="weight">Peso (kg)</Label>
+                            <Input
+                                id="weight"
+                                type="number"
+                                value={editedPet.weight || ""}
+                                onChange={(e) =>
+                                    setEditedPet({
+                                        ...editedPet,
+                                        weight: e.target.value ? parseInt(e.target.value) : null,
+                                    })
+                                }
+                            />
+                            <Label htmlFor="medicalHistory">Histórico Médico</Label>
+                            <Textarea
+                                id="medicalHistory"
+                                value={editedPet.medicalHistory || ""}
+                                onChange={(e) =>
+                                    setEditedPet({
+                                        ...editedPet,
+                                        medicalHistory: e.target.value,
+                                    })
+                                }
+                            />
                         </div>
                     )}
                     <DialogFooter>

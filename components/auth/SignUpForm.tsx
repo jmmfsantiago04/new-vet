@@ -4,9 +4,10 @@ import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signUpSchema, SignUpInput } from '@/app/db/schema';
-import { signUp } from '@/app/actions/auth';
+import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import * as z from "zod";
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,11 +21,53 @@ import {
 } from '@/components/ui/form';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
+// Brazilian phone regex: (XX) XXXXX-XXXX or (XX) XXXX-XXXX
+const phoneRegex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
+
+const signUpFormSchema = z.object({
+    name: z.string().min(2, {
+        message: "Nome deve ter pelo menos 2 caracteres.",
+    }),
+    email: z.string().email({
+        message: "Email inválido.",
+    }),
+    phone: z.string().regex(phoneRegex, {
+        message: "Número de telefone inválido. Use o formato: (71) 99999-9999",
+    }),
+    password: z.string().min(6, {
+        message: "Senha deve ter pelo menos 6 caracteres.",
+    }),
+    confirmPassword: z.string().min(6, {
+        message: "Confirmação de senha deve ter pelo menos 6 caracteres.",
+    }),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "As senhas não coincidem.",
+    path: ["confirmPassword"],
+});
+
+type SignUpFormValues = z.infer<typeof signUpFormSchema>;
+
+function formatPhoneNumber(value: string) {
+    // Remove all non-digit characters
+    const digits = value.replace(/\D/g, "");
+
+    // Format according to the number of digits
+    if (digits.length <= 2) {
+        return digits.replace(/(\d{1,2})/, "($1");
+    } else if (digits.length <= 6) {
+        return digits.replace(/(\d{2})(\d{0,4})/, "($1) $2");
+    } else if (digits.length <= 10) {
+        return digits.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3");
+    } else {
+        return digits.replace(/(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3").slice(0, 15);
+    }
+}
+
 export default function SignUpForm() {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
-    const form = useForm<SignUpInput>({
-        resolver: zodResolver(signUpSchema),
+    const form = useForm<SignUpFormValues>({
+        resolver: zodResolver(signUpFormSchema),
         defaultValues: {
             name: '',
             email: '',
@@ -34,19 +77,29 @@ export default function SignUpForm() {
         },
     });
 
-    const onSubmit = (data: SignUpInput) => {
+    const onSubmit = (data: SignUpFormValues) => {
         startTransition(async () => {
             try {
-                await signUp(data);
+                const result = await signIn('credentials', {
+                    email: data.email,
+                    password: data.password,
+                    name: data.name,
+                    phone: data.phone,
+                    callbackUrl: '/cliente/dashboard',
+                    redirect: false,
+                    isSignUp: true
+                });
+
+                if (result?.error) {
+                    toast.error(result.error);
+                    return;
+                }
+
                 toast.success('Conta criada com sucesso!');
                 form.reset();
                 router.push('/cliente/dashboard');
             } catch (error) {
-                if (error instanceof Error) {
-                    toast.error(error.message);
-                } else {
-                    toast.error('Erro ao criar conta');
-                }
+                toast.error('Erro ao criar conta');
             }
         });
     };
@@ -104,13 +157,19 @@ export default function SignUpForm() {
                             <FormField
                                 control={form.control}
                                 name="phone"
-                                render={({ field }) => (
+                                render={({ field: { onChange, ...field } }) => (
                                     <FormItem>
                                         <FormLabel>Telefone</FormLabel>
                                         <FormControl>
                                             <Input
-                                                placeholder="+5571999999999"
+                                                placeholder="(71) 99999-9999"
                                                 {...field}
+                                                onChange={(e) => {
+                                                    const formatted = formatPhoneNumber(e.target.value);
+                                                    e.target.value = formatted;
+                                                    onChange(e);
+                                                }}
+                                                maxLength={15}
                                             />
                                         </FormControl>
                                         <FormMessage />

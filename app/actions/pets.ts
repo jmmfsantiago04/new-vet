@@ -5,14 +5,30 @@ import { petsTable, insertPetSchema } from '@/app/db/schema';
 import { eq, sql } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { ZodError } from 'zod';
-import { getSession } from "@/app/lib/session";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export async function addPet(formData: FormData) {
     try {
-        const session = await getSession();
-        if (!session) {
+        console.log('Starting addPet function...');
+
+        const session = await getServerSession(authOptions);
+        console.log('Session data:', session);
+
+        if (!session?.user) {
+            console.log('No session found, returning error');
             return { error: "Você precisa estar logado para adicionar um pet" };
         }
+
+        // Log form data
+        console.log('Form data received:', {
+            name: formData.get('name'),
+            species: formData.get('species'),
+            breed: formData.get('breed'),
+            age: formData.get('age'),
+            weight: formData.get('weight'),
+            medicalHistory: formData.get('medicalHistory'),
+        });
 
         const pet = {
             name: formData.get('name') as string,
@@ -21,11 +37,15 @@ export async function addPet(formData: FormData) {
             age: formData.get('age') ? parseInt(formData.get('age') as string) : null,
             weight: formData.get('weight') ? parseInt(formData.get('weight') as string) : null,
             medicalHistory: formData.get('medicalHistory') as string || null,
-            userId: session.id,
+            userId: parseInt(session.user.id),
         };
 
+        console.log('Constructed pet object:', pet);
+
         // Validate the data before attempting to insert
+        console.log('Attempting to validate pet data...');
         const validatedPet = insertPetSchema.parse(pet);
+        console.log('Pet data validated successfully:', validatedPet);
 
         // Try to insert with retries
         let retries = 3;
@@ -33,24 +53,28 @@ export async function addPet(formData: FormData) {
 
         while (retries > 0) {
             try {
+                console.log(`Attempting to insert pet (${4 - retries} attempt)...`);
                 await db.insert(petsTable).values(validatedPet);
+                console.log('Pet inserted successfully!');
                 revalidatePath('/cliente/dashboard');
                 return { success: true };
             } catch (error) {
                 lastError = error;
+                console.error(`Failed insert attempt (${4 - retries}):`, error);
                 retries--;
                 if (retries > 0) {
-                    // Wait for a short time before retrying
+                    console.log(`Retrying in 1 second... (${retries} attempts remaining)`);
                     await new Promise(resolve => setTimeout(resolve, 1000));
                 }
             }
         }
 
-        console.error('Error adding pet after retries:', lastError);
+        console.error('All insert attempts failed. Last error:', lastError);
         return { error: "Erro ao adicionar pet. Por favor, tente novamente." };
     } catch (error) {
-        console.error('Error adding pet:', error);
+        console.error('Caught error in addPet:', error);
         if (error instanceof ZodError) {
+            console.log('Validation error details:', error.errors);
             return { error: "Dados inválidos. Por favor, verifique as informações." };
         }
         return { error: "Erro ao adicionar pet. Por favor, tente novamente." };
@@ -69,7 +93,7 @@ interface UpdatePetData {
 
 export async function updatePet(data: UpdatePetData) {
     try {
-        const session = await getSession();
+        const session = await getServerSession(authOptions);
         if (!session) {
             throw new Error("Não autorizado");
         }
@@ -96,7 +120,7 @@ export async function updatePet(data: UpdatePetData) {
 
 export async function deletePet(id: number) {
     try {
-        const session = await getSession();
+        const session = await getServerSession(authOptions);
         if (!session) {
             throw new Error("Não autorizado");
         }

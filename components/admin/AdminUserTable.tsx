@@ -224,30 +224,24 @@ export function AdminUserTable({ users, isLoading = false }: AdminUserTableProps
                     </DialogHeader>
 
                     <div className="space-y-4 py-4">
-                        <div className="space-y-2">
-                            <Label htmlFor="name">Nome</Label>
-                            <Input
-                                id="name"
-                                value={editForm.name}
-                                onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="email">Email</Label>
-                            <Input
-                                id="email"
-                                value={editForm.email}
-                                onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="phone">Telefone</Label>
-                            <Input
-                                id="phone"
-                                value={editForm.phone}
-                                onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
-                            />
-                        </div>
+                        <Label htmlFor="name">Nome</Label>
+                        <Input
+                            id="name"
+                            value={editForm.name}
+                            onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                        />
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                            id="email"
+                            value={editForm.email}
+                            onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
+                        />
+                        <Label htmlFor="phone">Telefone</Label>
+                        <Input
+                            id="phone"
+                            value={editForm.phone}
+                            onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
+                        />
                     </div>
 
                     <DialogFooter className="flex gap-2">

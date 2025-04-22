@@ -24,6 +24,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { changePassword } from '@/app/actions/change-password';
+import { DialogFooter } from '@/components/ui/dialog';
 
 const changePasswordSchema = z.object({
     currentPassword: z.string().min(1, 'Senha atual é obrigatória'),
@@ -138,7 +139,7 @@ export function ChangePasswordDialog() {
                             )}
                         />
 
-                        <div className="flex flex-col-reverse sm:flex-row justify-end gap-4 pt-4">
+                        <DialogFooter className="flex flex-col-reverse sm:flex-row justify-end gap-4 pt-4">
                             <Button
                                 type="button"
                                 variant="outline"
@@ -153,7 +154,7 @@ export function ChangePasswordDialog() {
                             >
                                 Salvar
                             </Button>
-                        </div>
+                        </DialogFooter>
                     </form>
                 </Form>
             </DialogContent>

@@ -44,7 +44,7 @@ export default function HowToHome() {
     return (
         <section className="py-16 sm:py-20 md:py-24 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <motion.div
+                <motion.header
                     className="text-center space-y-4 mb-12 sm:mb-16"
                     {...fadeInAnimation}
                     transition={{ duration: 0.6 }}
@@ -63,29 +63,27 @@ export default function HowToHome() {
                     >
                         Conheça o passo a passo para agendar uma consulta veterinária
                     </motion.p>
-                </motion.div>
+                </motion.header>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12">
                     {steps.map((step, index) => (
-                        <motion.div
+                        <motion.article
                             key={index}
-                            className="relative p-6 sm:p-8 rounded-xl bg-white shadow-md hover:shadow-lg transition-all duration-300"
+                            className="relative p-6 sm:p-8 rounded-xl bg-white shadow-md hover:shadow-lg transition-all duration-300 text-center"
                             {...cardAnimation}
                             transition={{ duration: 0.5, delay: index * 0.2 }}
                         >
-                            <div className="flex flex-col items-center text-center space-y-4">
-                                <span className="text-4xl sm:text-5xl mb-2">{step.icon}</span>
-                                <span className="text-sm font-semibold text-[var(--primary)] bg-blue-100 px-3 py-1 rounded-full">
-                                    {step.number}
-                                </span>
-                                <h3 className="text-lg sm:text-xl font-semibold text-[var(--primary)]">
-                                    {step.title}
-                                </h3>
-                                <p className="text-[var(--text-secondary)] text-sm sm:text-base">
-                                    {step.description}
-                                </p>
-                            </div>
-                        </motion.div>
+                            <span className="text-4xl sm:text-5xl mb-4 block">{step.icon}</span>
+                            <span className="text-sm font-semibold text-[var(--primary)] bg-blue-100 px-3 py-1 rounded-full mb-4 inline-block">
+                                {step.number}
+                            </span>
+                            <h3 className="text-lg sm:text-xl font-semibold text-[var(--primary)] mb-3">
+                                {step.title}
+                            </h3>
+                            <p className="text-[var(--text-secondary)] text-sm sm:text-base">
+                                {step.description}
+                            </p>
+                        </motion.article>
                     ))}
                 </div>
             </div>

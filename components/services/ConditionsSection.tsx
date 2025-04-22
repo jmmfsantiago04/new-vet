@@ -45,7 +45,7 @@ export function ConditionsSection() {
                 </motion.h2>
                 <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-4">
                     {commonConditions.map((item, index) => (
-                        <motion.div
+                        <motion.article
                             key={index}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -55,17 +55,9 @@ export function ConditionsSection() {
                         >
                             <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
                                 <CardHeader>
-                                    <motion.div
-                                        initial={{ opacity: 0 }}
-                                        whileInView={{ opacity: 1 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: 0.2 + index * 0.1 }}
-                                    >
-
-                                        <CardTitle className="text-lg md:text-xl text-[var(--primary)]">
-                                            {item.category}
-                                        </CardTitle>
-                                    </motion.div>
+                                    <CardTitle className="text-lg md:text-xl text-[var(--primary)]">
+                                        {item.category}
+                                    </CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <motion.ul
@@ -97,7 +89,7 @@ export function ConditionsSection() {
                                     </motion.ul>
                                 </CardContent>
                             </Card>
-                        </motion.div>
+                        </motion.article>
                     ))}
                 </div>
             </div>

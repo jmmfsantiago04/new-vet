@@ -2,18 +2,15 @@ import Link from "next/link"
 import * as motion from "motion/react-client"
 import { Button } from "@/components/ui/button"
 
-const fadeUpAnimation = {
+const containerAnimation = {
     initial: { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true }
 }
 
 const buttonAnimation = {
-    initial: { opacity: 0, scale: 0.9 },
-    whileInView: { opacity: 1, scale: 1 },
-    viewport: { once: true },
-    whileHover: { scale: 1.05 },
-    whileTap: { scale: 0.95 }
+    whileHover: { scale: 1.02 },
+    whileTap: { scale: 0.98 }
 }
 
 const pawAnimation = {
@@ -24,41 +21,34 @@ const pawAnimation = {
 
 export function CTAServices() {
     return (
-        <section className="relative py-16 md:py-20 bg-blue-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <motion.h2
-                    className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-[var(--primary)]"
-                    {...fadeUpAnimation}
+        <section className="relative py-16 md:py-24 bg-[var(--primary)]">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <motion.div
+                    className="text-center space-y-8"
+                    {...containerAnimation}
                     transition={{ duration: 0.5 }}
                 >
-                    Pronto para Começar?
-                </motion.h2>
-                <motion.p
-                    className="text-base md:text-lg text-[var(--text-secondary)] mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed"
-                    {...fadeUpAnimation}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                    Escolha o serviço que melhor atende às suas necessidades e agende sua consulta hoje. Nossos
-                    veterinários estão aqui para ajudar!
-                </motion.p>
-                <motion.div
-                    {...buttonAnimation}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                >
-                    <Button
-                        asChild
-                        size="lg"
-                        variant="secondary"
-                        className="bg-[var(--primary)] text-white hover:bg-[var(--primary)]/90 px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all duration-300"
-                    >
-                        <Link
-                            href="https://wa.me/5571991916499"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                    <h2 className="text-3xl md:text-4xl font-bold text-white">
+                        Pronto para cuidar melhor do seu pet?
+                    </h2>
+                    <p className="text-lg text-white/90 max-w-2xl mx-auto">
+                        Comece agora mesmo com nossa consulta online e garanta o melhor atendimento veterinário para seu companheiro.
+                    </p>
+                    <motion.div {...buttonAnimation}>
+                        <Button
+                            asChild
+                            size="lg"
+                            className="bg-white text-[var(--primary)] hover:bg-white/90"
                         >
-                            Entre em Contato
-                        </Link>
-                    </Button>
+                            <Link
+                                href="https://wa.me/5571991916499"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Agendar Consulta
+                            </Link>
+                        </Button>
+                    </motion.div>
                 </motion.div>
 
                 {/* Sequential paw prints */}

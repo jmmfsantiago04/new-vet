@@ -122,42 +122,33 @@ export function ServicesSection() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3 place-items-start">
                     {services.map((service, index) => (
-                        <motion.div
+                        <motion.article
                             key={service.id}
                             {...cardAnimation}
                             transition={{ duration: 0.5, delay: index * 0.2 }}
                         >
                             <Card className="w-full max-w-sm mx-auto bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
                                 <CardHeader className="space-y-2">
-                                    <motion.div
+                                    <motion.span
                                         className="text-5xl mb-2"
                                         {...iconAnimation}
                                     >
                                         {service.icon}
-                                    </motion.div>
-                                    <motion.div
-                                        {...fadeInAnimation}
-                                        transition={{ delay: 0.2 + index * 0.1 }}
-                                    >
-                                        <CardTitle className="text-xl font-bold text-[var(--primary)]">{service.name}</CardTitle>
-                                        <CardDescription className="text-sm leading-normal text-[var(--text-secondary)]">
-                                            {service.description}
-                                        </CardDescription>
-                                    </motion.div>
+                                    </motion.span>
+                                    <CardTitle className="text-xl font-bold text-[var(--primary)]">{service.name}</CardTitle>
+                                    <CardDescription className="text-sm leading-normal text-[var(--text-secondary)]">
+                                        {service.description}
+                                    </CardDescription>
                                 </CardHeader>
                                 <CardContent className="pt-4">
-                                    <motion.div
-                                        className="flex justify-between items-center mb-6"
-                                        {...slideLeftAnimation}
-                                        transition={{ delay: 0.3 + index * 0.1 }}
-                                    >
+                                    <div className="flex justify-between items-center mb-6">
                                         <Badge variant="default" className="text-base px-2.5 py-0.5 bg-[var(--primary)] hover:bg-[var(--primary)]/90">
                                             {service.price}
                                         </Badge>
                                         <span className="text-sm text-[var(--text-secondary)]">
                                             {service.duration}
                                         </span>
-                                    </motion.div>
+                                    </div>
                                     <motion.ul
                                         className="space-y-2.5"
                                         {...fadeInAnimation}
@@ -205,7 +196,7 @@ export function ServicesSection() {
                                     </motion.div>
                                 </CardFooter>
                             </Card>
-                        </motion.div>
+                        </motion.article>
                     ))}
                 </div>
             </div>
