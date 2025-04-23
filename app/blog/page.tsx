@@ -10,12 +10,13 @@ type SearchParams = {
     page?: string
 }
 
-interface PageProps {
-    searchParams: SearchParams
+type Props = {
+    params: { slug: string }
+    searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export default async function BlogPage({ searchParams }: PageProps) {
-    const page = searchParams?.page ? parseInt(searchParams.page) : 1;
+export default async function BlogPage({ searchParams }: Props) {
+    const page = typeof searchParams?.page === 'string' ? parseInt(searchParams.page) : 1;
 
     return (
         <main className="min-h-screen">
