@@ -39,6 +39,11 @@ const changePasswordSchema = z.object({
 
 type ChangePasswordForm = z.infer<typeof changePasswordSchema>;
 
+type ChangePasswordData = {
+    currentPassword: string;
+    newPassword: string;
+};
+
 export function ChangePasswordDialog() {
     const [isOpen, setIsOpen] = useState(false);
     const form = useForm<ChangePasswordForm>({
@@ -52,7 +57,11 @@ export function ChangePasswordDialog() {
 
     const onSubmit = async (data: ChangePasswordForm) => {
         try {
-            await changePassword(data);
+            const changePasswordData: ChangePasswordData = {
+                currentPassword: data.currentPassword,
+                newPassword: data.newPassword,
+            };
+            await changePassword(changePasswordData);
             toast.success("Senha alterada com sucesso!");
             setIsOpen(false);
             form.reset();

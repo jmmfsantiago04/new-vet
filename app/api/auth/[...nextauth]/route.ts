@@ -1,4 +1,5 @@
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import NextAuth from 'next-auth';
+import type { AuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { db } from '@/app/db';
@@ -6,7 +7,29 @@ import { eq } from 'drizzle-orm';
 import { usersTable } from '@/app/db/schema';
 import bcrypt from 'bcrypt';
 
-export const authOptions: NextAuthOptions = {
+interface ExtendedUser {
+    id: string;
+    role: string;
+    email?: string | null;
+    name?: string | null;
+    image?: string | null;
+}
+
+declare module 'next-auth' {
+    interface Session {
+        user: ExtendedUser;
+    }
+
+    interface User extends ExtendedUser { }
+}
+
+declare module 'next-auth/jwt' {
+    interface JWT {
+        role: string;
+    }
+}
+
+export const authOptions: AuthOptions = {
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -118,7 +141,7 @@ export const authOptions: NextAuthOptions = {
         async session({ session, token }) {
             if (session?.user) {
                 session.user.id = token.sub!;
-                session.user.role = token.role as string;
+                session.user.role = token.role;
             }
             return session;
         },

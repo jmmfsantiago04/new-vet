@@ -4,12 +4,25 @@ import { db } from '@/app/db';
 import { appointmentsTable } from '@/app/db/schema';
 import { and, eq } from 'drizzle-orm';
 import type { AppointmentSchema } from '@/app/lib/validations/appointment';
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+type SessionUser = {
+    id: string;
+    role?: string;
+    email?: string | null;
+    name?: string | null;
+    image?: string | null;
+};
+
+type Session = {
+    user?: SessionUser;
+    expires: string;
+};
 
 export async function createAppointment(data: AppointmentSchema) {
     try {
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(authOptions) as Session | null;
         if (!session?.user) {
             return { error: 'Você precisa estar logado para agendar uma consulta.' };
         }

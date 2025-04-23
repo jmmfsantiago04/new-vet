@@ -3,9 +3,22 @@
 import { db } from '@/app/db';
 import { usersTable } from '@/app/db/schema';
 import { eq } from 'drizzle-orm';
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { revalidatePath } from 'next/cache';
+
+type SessionUser = {
+    id: string;
+    role?: string;
+    email?: string | null;
+    name?: string | null;
+    image?: string | null;
+};
+
+type Session = {
+    user?: SessionUser;
+    expires: string;
+};
 
 interface UpdateUserData {
     name: string;
@@ -15,7 +28,7 @@ interface UpdateUserData {
 
 export async function updateUser(userId: number, data: UpdateUserData) {
     try {
-        const session = await getServerSession(authOptions);
+        const session = await getServerSession(authOptions) as Session | null;
         if (!session?.user?.id) {
             return { error: 'Não autorizado' };
         }

@@ -6,14 +6,26 @@ import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { ZodError } from 'zod';
 import { getServerSession } from "next-auth/next";
-import type { Session } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+
+type SessionUser = {
+    id: string;
+    role?: string;
+    email?: string | null;
+    name?: string | null;
+    image?: string | null;
+};
+
+type Session = {
+    user?: SessionUser;
+    expires: string;
+};
 
 export async function addPet(formData: FormData) {
     try {
         console.log('Starting addPet function...');
 
-        const session = (await getServerSession(authOptions)) as Session | null;
+        const session = await getServerSession(authOptions) as Session | null;
         console.log('Session data:', session);
 
         if (!session?.user?.id) {
