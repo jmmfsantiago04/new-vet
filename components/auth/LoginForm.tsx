@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { signInSchema, SignInInput } from '@/app/db/schema';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
@@ -22,7 +21,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import GoogleSignInButton from './GoogleSignInButton';
 
 export default function LoginForm() {
-    const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const form = useForm<SignInInput>({
         resolver: zodResolver(signInSchema),

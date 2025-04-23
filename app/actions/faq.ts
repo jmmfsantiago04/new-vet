@@ -213,15 +213,14 @@ export async function getFaqCategories() {
 
 export async function getFaqItems(categoryId?: number) {
     try {
-        let query = db.select()
+        let baseQuery = db.select()
             .from(faqItemsTable)
             .orderBy(faqItemsTable.order);
 
-        if (categoryId) {
-            query = query.where(eq(faqItemsTable.categoryId, categoryId));
-        }
+        const items = categoryId
+            ? await baseQuery.where(eq(faqItemsTable.categoryId, categoryId))
+            : await baseQuery;
 
-        const items = await query;
         return { success: true, data: items };
     } catch (error) {
         console.error('Error fetching FAQ items:', error);
