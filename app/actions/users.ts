@@ -4,7 +4,7 @@ import { db } from '@/app/db';
 import { usersTable } from '@/app/db/schema';
 import { eq } from 'drizzle-orm';
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/lib/auth";
 import { revalidatePath } from 'next/cache';
 
 type SessionUser = {

@@ -5,7 +5,7 @@ import { appointmentsTable } from '@/app/db/schema';
 import { and, eq } from 'drizzle-orm';
 import type { AppointmentSchema } from '@/app/lib/validations/appointment';
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/lib/auth";
 
 type SessionUser = {
     id: string;
