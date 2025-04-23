@@ -5,14 +5,6 @@ import { eq } from "drizzle-orm"
 import * as motion from "motion/react-client"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Suspense } from "react"
-import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination"
 
 const fadeUpAnimation = {
     initial: { opacity: 0, y: 20 },
@@ -29,15 +21,6 @@ const cardAnimation = {
     initial: { opacity: 0, y: 30 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true }
-}
-
-const paginationAnimation = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 }
-}
-
-interface BlogSectionProps {
-    currentPage?: number
 }
 
 function BlogSectionSkeleton() {
@@ -61,19 +44,8 @@ function BlogSectionSkeleton() {
     )
 }
 
-export async function BlogSection({ currentPage = 1 }: BlogSectionProps) {
-    const itemsPerPage = 6;
-    const offset = (currentPage - 1) * itemsPerPage;
-
-    // First, get total count for pagination
-    const totalPosts = await db
-        .select({ count: blogPostsTable.id })
-        .from(blogPostsTable)
-        .where(eq(blogPostsTable.isPublished, true));
-
-    const calculatedTotalPages = Math.ceil(Number(totalPosts[0].count) / itemsPerPage);
-
-    // Then fetch paginated posts
+export async function BlogSection() {
+    // Fetch all published posts
     const posts = await db
         .select({
             id: blogPostsTable.id,
@@ -87,11 +59,7 @@ export async function BlogSection({ currentPage = 1 }: BlogSectionProps) {
         .from(blogPostsTable)
         .leftJoin(blogCategoriesTable, eq(blogPostsTable.categoryId, blogCategoriesTable.id))
         .where(eq(blogPostsTable.isPublished, true))
-        .orderBy(blogPostsTable.publishedAt)
-        .limit(itemsPerPage)
-        .offset(offset);
-
-    const currentPosts = posts.slice(offset, offset + itemsPerPage);
+        .orderBy(blogPostsTable.publishedAt);
 
     return (
         <section className="py-8 sm:py-12 md:py-16 bg-blue-50">
@@ -119,7 +87,7 @@ export async function BlogSection({ currentPage = 1 }: BlogSectionProps) {
                     </motion.div>
 
                     <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 place-items-stretch">
-                        {currentPosts.map((post, index) => (
+                        {posts.map((post, index) => (
                             <motion.div
                                 key={post.id}
                                 {...cardAnimation}
@@ -137,41 +105,6 @@ export async function BlogSection({ currentPage = 1 }: BlogSectionProps) {
                             </motion.div>
                         ))}
                     </div>
-
-                    {calculatedTotalPages > 1 && (
-                        <motion.div
-                            className="mt-8 sm:mt-12"
-                            {...paginationAnimation}
-                            transition={{ delay: 0.6 }}
-                        >
-                            <Pagination>
-                                <PaginationContent className="flex-wrap gap-2">
-                                    <PaginationItem>
-                                        <PaginationPrevious
-                                            href={currentPage > 1 ? `/blog?page=${currentPage - 1}` : '#'}
-                                            aria-disabled={currentPage === 1}
-                                        />
-                                    </PaginationItem>
-                                    {Array.from({ length: calculatedTotalPages }, (_, i) => i + 1).map((page) => (
-                                        <PaginationItem key={page}>
-                                            <PaginationLink
-                                                href={`/blog?page=${page}`}
-                                                isActive={currentPage === page}
-                                            >
-                                                {page}
-                                            </PaginationLink>
-                                        </PaginationItem>
-                                    ))}
-                                    <PaginationItem>
-                                        <PaginationNext
-                                            href={currentPage < calculatedTotalPages ? `/blog?page=${currentPage + 1}` : '#'}
-                                            aria-disabled={currentPage === calculatedTotalPages}
-                                        />
-                                    </PaginationItem>
-                                </PaginationContent>
-                            </Pagination>
-                        </motion.div>
-                    )}
                 </Suspense>
             </div>
         </section>
