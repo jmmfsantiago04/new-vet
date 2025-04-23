@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm';
 import { petsTable, appointmentsTable } from '@/app/db/schema';
 import { DashboardContent } from '@/components/cliente/DashboardContent';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/lib/auth';
 
 export default async function DashboardPage() {
     const session = await getServerSession(authOptions);
