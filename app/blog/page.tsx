@@ -6,10 +6,6 @@ export const metadata: Metadata = {
     description: "Artigos e dicas sobre saúde e bem-estar animal.",
 }
 
-type SearchParams = {
-    page?: string
-}
-
 type Props = {
     params: { slug: string }
     searchParams: { [key: string]: string | string[] | undefined }
