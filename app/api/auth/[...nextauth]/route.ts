@@ -7,28 +7,6 @@ import { eq } from 'drizzle-orm';
 import { usersTable } from '@/app/db/schema';
 import bcrypt from 'bcrypt';
 
-interface ExtendedUser {
-    id: string;
-    role: string;
-    email?: string | null;
-    name?: string | null;
-    image?: string | null;
-}
-
-declare module 'next-auth' {
-    interface Session {
-        user: ExtendedUser;
-    }
-
-    interface User extends ExtendedUser { }
-}
-
-declare module 'next-auth/jwt' {
-    interface JWT {
-        role: string;
-    }
-}
-
 export const authOptions: AuthOptions = {
     providers: [
         GoogleProvider({
