@@ -61,9 +61,22 @@ export function AdminPetTable({ pets, isLoading = false }: AdminPetTableProps) {
         setIsEditDialogOpen(true);
     };
 
-    const handleDelete = (id: number) => {
+    const handleDeleteClick = (id: number) => {
         setSelectedPetId(id);
         setIsDeleteDialogOpen(true);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (!selectedPetId) return;
+        try {
+            await deletePet(selectedPetId);
+            setIsDeleteDialogOpen(false);
+            toast.success("Pet excluído com sucesso!");
+            router.refresh();
+        } catch (err) {
+            console.error("Error deleting pet:", err);
+            toast.error("Erro ao excluir pet");
+        }
     };
 
     const handleUpdatePet = async () => {
@@ -81,20 +94,9 @@ export function AdminPetTable({ pets, isLoading = false }: AdminPetTableProps) {
             });
             setIsEditDialogOpen(false);
             toast.success("Pet atualizado com sucesso!");
-        } catch (error) {
+        } catch (err) {
+            console.error("Error updating pet:", err);
             toast.error("Erro ao atualizar pet");
-        }
-    };
-
-    const handleDeletePet = async () => {
-        if (!selectedPetId) return;
-
-        try {
-            await deletePet(selectedPetId);
-            setIsDeleteDialogOpen(false);
-            toast.success("Pet excluído com sucesso!");
-        } catch (error) {
-            toast.error("Erro ao excluir pet");
         }
     };
 
@@ -224,7 +226,7 @@ export function AdminPetTable({ pets, isLoading = false }: AdminPetTableProps) {
                                                 <Button
                                                     variant="destructive"
                                                     size="sm"
-                                                    onClick={() => handleDelete(pet.id)}
+                                                    onClick={() => handleDeleteClick(pet.id)}
                                                 >
                                                     Excluir
                                                 </Button>
@@ -328,10 +330,10 @@ export function AdminPetTable({ pets, isLoading = false }: AdminPetTableProps) {
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
-                        <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+                        <Button variant="ghost" onClick={() => setIsDeleteDialogOpen(false)}>
                             Cancelar
                         </Button>
-                        <Button variant="destructive" onClick={handleDeletePet}>
+                        <Button variant="destructive" onClick={handleConfirmDelete}>
                             Excluir
                         </Button>
                     </DialogFooter>

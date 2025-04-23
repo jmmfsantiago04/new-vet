@@ -1,5 +1,5 @@
 import { db } from '@/app/db';
-import { petsTable, usersTable } from '@/app/db/schema';
+import { petsTable } from '@/app/db/schema';
 import { AdminPetTable } from '@/components/admin/AdminPetTable';
 import { desc } from 'drizzle-orm';
 

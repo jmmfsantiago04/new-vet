@@ -2,7 +2,7 @@
 
 import { db } from "@/app/db";
 import { revalidatePath } from "next/cache";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import {
     blogCategoriesTable,
     blogPostsTable,

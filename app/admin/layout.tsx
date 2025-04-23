@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import SignOutButton from '@/components/auth/SignOutButton';
 import {
     Card,
     CardContent,

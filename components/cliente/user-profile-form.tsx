@@ -21,6 +21,7 @@ import { updateUser } from "@/app/actions/users"
 import { changePassword } from "@/app/actions/change-password"
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { Skeleton } from "@/components/ui/skeleton"
 
 // Brazilian phone regex: (XX) XXXXX-XXXX or (XX) XXXX-XXXX
 const phoneRegex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/
@@ -91,12 +92,33 @@ export function UserProfileForm({ user }: UserProfileFormProps) {
         }
     }, [status, router]);
 
-    if (status === 'loading') {
+    const profileForm = useForm<ProfileFormValues>({
+        resolver: zodResolver(profileFormSchema),
+        defaultValues: {
+            name: user?.name || "",
+            email: user?.email || "",
+            phone: user?.phone || "",
+        },
+    });
+
+    const passwordForm = useForm<PasswordFormValues>({
+        resolver: zodResolver(passwordFormSchema),
+        defaultValues: {
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: "",
+        },
+    });
+
+    if (status === "loading") {
         return (
             <div className="space-y-6">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Carregando...</CardTitle>
+                        <div className="space-y-2">
+                            <Skeleton className="h-4 w-[250px]" />
+                            <Skeleton className="h-4 w-[200px]" />
+                        </div>
                     </CardHeader>
                 </Card>
             </div>
@@ -106,24 +128,6 @@ export function UserProfileForm({ user }: UserProfileFormProps) {
     if (!session) {
         return null;
     }
-
-    const profileForm = useForm<ProfileFormValues>({
-        resolver: zodResolver(profileFormSchema),
-        defaultValues: {
-            name: user.name,
-            email: user.email,
-            phone: user.phone,
-        },
-    })
-
-    const passwordForm = useForm<PasswordFormValues>({
-        resolver: zodResolver(passwordFormSchema),
-        defaultValues: {
-            currentPassword: "",
-            newPassword: "",
-            confirmPassword: "",
-        },
-    })
 
     async function onProfileSubmit(data: ProfileFormValues) {
         setIsLoading(true)

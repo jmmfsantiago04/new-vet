@@ -2,7 +2,7 @@
 
 import { db } from '@/app/db';
 import { petsTable, insertPetSchema } from '@/app/db/schema';
-import { eq, sql } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { ZodError } from 'zod';
 import { getServerSession } from "next-auth";

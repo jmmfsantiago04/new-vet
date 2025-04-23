@@ -1,8 +1,6 @@
 import 'dotenv/config';
 import { drizzle } from 'drizzle-orm/neon-http';
 import { neon } from '@neondatabase/serverless';
-import bcrypt from 'bcrypt';
-import { usersTable, UserRole } from './schema';
 import * as schema from './schema';
 import { seedUsers } from './seed/users';
 import { seedFaq } from './seed/faq';
@@ -13,7 +11,7 @@ if (!process.env.DATABASE_URL) {
 }
 
 const sql = neon(process.env.DATABASE_URL);
-export const db = drizzle(sql, { schema });
+const db = drizzle(sql, { schema });
 
 async function main() {
     try {
