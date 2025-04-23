@@ -138,7 +138,8 @@ export function UserProfileForm({ user }: UserProfileFormProps) {
             } else {
                 toast.success("Perfil atualizado com sucesso!")
             }
-        } catch (error) {
+        } catch (err) {
+            console.error("Error updating profile:", err)
             toast.error("Erro ao atualizar perfil. Tente novamente.")
         } finally {
             setIsLoading(false)
@@ -159,7 +160,8 @@ export function UserProfileForm({ user }: UserProfileFormProps) {
                 toast.success("Senha atualizada com sucesso!")
                 passwordForm.reset()
             }
-        } catch (error) {
+        } catch (err) {
+            console.error("Error updating password:", err)
             toast.error("Erro ao atualizar senha. Tente novamente.")
         } finally {
             setIsLoading(false)

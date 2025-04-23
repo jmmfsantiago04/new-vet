@@ -73,8 +73,9 @@ export function AdminAppointmentTable({ appointments, isLoading = false }: Admin
             toast.success("Status da consulta atualizado com sucesso!");
             setIsStatusDialogOpen(false);
             router.refresh();
-        } catch (error) {
-            toast.error("Erro ao atualizar status da consulta");
+        } catch (err) {
+            console.error("Error updating appointment:", err);
+            toast.error("Erro ao atualizar consulta");
         }
     };
 

@@ -63,8 +63,8 @@ function BlogSectionSkeleton() {
 }
 
 export async function BlogSection({ currentPage = 1, totalPages = 1 }: BlogSectionProps) {
-    const postsPerPage = 6;
-    const offset = (currentPage - 1) * postsPerPage;
+    const itemsPerPage = 6;
+    const offset = (currentPage - 1) * itemsPerPage;
 
     // First, get total count for pagination
     const totalPosts = await db
@@ -72,7 +72,7 @@ export async function BlogSection({ currentPage = 1, totalPages = 1 }: BlogSecti
         .from(blogPostsTable)
         .where(eq(blogPostsTable.isPublished, true));
 
-    const calculatedTotalPages = Math.ceil(Number(totalPosts[0].count) / postsPerPage);
+    const calculatedTotalPages = Math.ceil(Number(totalPosts[0].count) / itemsPerPage);
 
     // Then fetch paginated posts
     const posts = await db
@@ -89,8 +89,10 @@ export async function BlogSection({ currentPage = 1, totalPages = 1 }: BlogSecti
         .leftJoin(blogCategoriesTable, eq(blogPostsTable.categoryId, blogCategoriesTable.id))
         .where(eq(blogPostsTable.isPublished, true))
         .orderBy(blogPostsTable.publishedAt)
-        .limit(postsPerPage)
+        .limit(itemsPerPage)
         .offset(offset);
+
+    const currentPosts = posts.slice(offset, offset + itemsPerPage);
 
     return (
         <section className="py-8 sm:py-12 md:py-16 bg-blue-50">
@@ -118,7 +120,7 @@ export async function BlogSection({ currentPage = 1, totalPages = 1 }: BlogSecti
                     </motion.div>
 
                     <div className="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 place-items-stretch">
-                        {posts.map((post, index) => (
+                        {currentPosts.map((post, index) => (
                             <motion.div
                                 key={post.id}
                                 {...cardAnimation}

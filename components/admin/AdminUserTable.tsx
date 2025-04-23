@@ -17,10 +17,9 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
-    DialogFooter,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -67,16 +66,13 @@ export function AdminUserTable({ users, isLoading = false }: AdminUserTableProps
     const handleDelete = async (userId: number) => {
         try {
             setIsDeleting(true);
-            const result = await deleteUser(userId);
-            if (result.error) {
-                toast.error(result.error);
-            } else {
-                toast.success('Usuário excluído com sucesso');
-                router.refresh();
-                setSelectedUser(null);
-            }
-        } catch (error) {
-            toast.error('Erro ao excluir usuário');
+            await deleteUser(userId);
+            toast.success("Usuário excluído com sucesso!");
+            router.refresh();
+            setSelectedUser(null);
+        } catch (err) {
+            console.error("Error deleting user:", err);
+            toast.error("Erro ao excluir usuário");
         } finally {
             setIsDeleting(false);
         }
@@ -87,17 +83,14 @@ export function AdminUserTable({ users, isLoading = false }: AdminUserTableProps
 
         try {
             setIsEditing(true);
-            const result = await updateUser(selectedUser.id, editForm);
-            if (result.error) {
-                toast.error(result.error);
-            } else {
-                toast.success('Usuário atualizado com sucesso');
-                router.refresh();
-                setSelectedUser(null);
-                setIsEditing(false);
-            }
-        } catch (error) {
-            toast.error('Erro ao atualizar usuário');
+            await updateUser(selectedUser.id, editForm);
+            toast.success("Usuário atualizado com sucesso!");
+            router.refresh();
+            setSelectedUser(null);
+            setIsEditing(false);
+        } catch (err) {
+            console.error("Error updating user:", err);
+            toast.error("Erro ao atualizar usuário");
         } finally {
             setIsEditing(false);
         }

@@ -35,22 +35,14 @@ export default function LoginForm() {
     const onSubmit = (data: SignInInput) => {
         startTransition(async () => {
             try {
-                const result = await signIn('credentials', {
+                await signIn("credentials", {
                     email: data.email,
                     password: data.password,
-                    redirect: true,
-                    callbackUrl: `/api/auth/callback/credentials?token=${encodeURIComponent(data.email)}`
+                    callbackUrl: "/cliente/dashboard",
                 });
-
-                if (result?.error) {
-                    toast.error('Credenciais inválidas');
-                    return;
-                }
-
-                toast.success('Login realizado com sucesso!');
-                form.reset();
-            } catch (error) {
-                toast.error('Erro ao fazer login');
+            } catch (err) {
+                console.error("Error signing in:", err);
+                toast.error("Erro ao fazer login. Verifique suas credenciais.");
             }
         });
     };

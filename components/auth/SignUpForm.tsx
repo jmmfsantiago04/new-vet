@@ -3,7 +3,6 @@
 import { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signUpSchema, SignUpInput } from '@/app/db/schema';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
@@ -80,26 +79,12 @@ export default function SignUpForm() {
     const onSubmit = (data: SignUpFormValues) => {
         startTransition(async () => {
             try {
-                const result = await signIn('credentials', {
-                    email: data.email,
-                    password: data.password,
-                    name: data.name,
-                    phone: data.phone,
-                    callbackUrl: '/cliente/dashboard',
-                    redirect: false,
-                    isSignUp: true
-                });
-
-                if (result?.error) {
-                    toast.error(result.error);
-                    return;
-                }
-
-                toast.success('Conta criada com sucesso!');
-                form.reset();
-                router.push('/cliente/dashboard');
-            } catch (error) {
-                toast.error('Erro ao criar conta');
+                await signUp(data);
+                toast.success("Conta criada com sucesso!");
+                router.push("/login");
+            } catch (err) {
+                console.error("Error signing up:", err);
+                toast.error("Erro ao criar conta. Tente novamente.");
             }
         });
     };

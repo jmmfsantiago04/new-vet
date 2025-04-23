@@ -9,7 +9,6 @@ import {
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter,
     SidebarHeader,
     SidebarProvider,
     SidebarMenu,

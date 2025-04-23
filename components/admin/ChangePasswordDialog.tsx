@@ -52,16 +52,13 @@ export function ChangePasswordDialog() {
 
     const onSubmit = async (data: ChangePasswordForm) => {
         try {
-            const result = await changePassword(data);
-            if (result.error) {
-                toast.error(result.error);
-            } else {
-                toast.success('Senha alterada com sucesso!');
-                setIsOpen(false);
-                form.reset();
-            }
-        } catch (error) {
-            toast.error('Erro ao alterar senha');
+            await changePassword(data);
+            toast.success("Senha alterada com sucesso!");
+            setIsOpen(false);
+            form.reset();
+        } catch (err) {
+            console.error("Error changing password:", err);
+            toast.error("Erro ao alterar senha");
         }
     };
 

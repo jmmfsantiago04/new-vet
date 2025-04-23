@@ -1,6 +1,5 @@
 import FaqContent from "@/components/faq/FaqContent"
 import { Metadata } from "next"
-import { Badge } from "@/components/ui/badge"
 import { db } from "@/app/db"
 import { faqCategoriesTable, faqItemsTable } from "@/app/db/schema"
 

@@ -10,10 +10,37 @@ import { PawPrint, Calendar, Settings } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
+interface Pet {
+    id: number;
+    name: string;
+    species: string;
+    breed: string | null;
+    age: number | null;
+    weight: number | null;
+    medicalHistory: string | null;
+    createdAt: Date;
+    userId: number;
+}
+
+interface AppointmentPet {
+    id: number;
+    name: string;
+    species: string;
+}
+
+interface Appointment {
+    id: number;
+    date: string;
+    time: string;
+    status: string;
+    petId: number;
+    pet: AppointmentPet;
+}
+
 interface DashboardContentProps {
     userName: string;
-    userPets: any[];
-    userAppointments: any[];
+    userPets: Pet[];
+    userAppointments: Appointment[];
 }
 
 export function DashboardContent({ userName, userPets, userAppointments }: DashboardContentProps) {

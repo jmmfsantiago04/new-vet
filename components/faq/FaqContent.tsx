@@ -157,22 +157,12 @@ export default function FaqContent({ categories }: FaqContentProps) {
                                                 {category.category}
                                             </motion.h3>
                                             <Accordion type="single" collapsible className="w-full">
-                                                {category.items
-                                                    .filter(item => item.isActive)
-                                                    .map((item, itemIndex) => (
-                                                        <AccordionItem
-                                                            key={item.id}
-                                                            value={`item-${item.id}`}
-                                                            className="border-b border-gray-200 last:border-0"
-                                                        >
-                                                            <AccordionTrigger className="text-[var(--primary)] hover:text-[var(--primary)]/90 text-left hover:no-underline">
-                                                                {item.question}
-                                                            </AccordionTrigger>
-                                                            <AccordionContent className="text-[var(--text-secondary)] leading-relaxed">
-                                                                {item.answer}
-                                                            </AccordionContent>
-                                                        </AccordionItem>
-                                                    ))}
+                                                {category.items.map((item) => (
+                                                    <AccordionItem key={item.id} value={`item-${item.id}`}>
+                                                        <AccordionTrigger>{item.question}</AccordionTrigger>
+                                                        <AccordionContent>{item.answer}</AccordionContent>
+                                                    </AccordionItem>
+                                                ))}
                                             </Accordion>
                                         </motion.div>
                                     ))}

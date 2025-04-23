@@ -43,7 +43,7 @@ import {
 } from '@/app/actions/faq';
 import { insertFaqCategorySchema, insertFaqItemSchema } from '@/app/db/schema';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowUpDown, Edit, Trash2, ToggleLeft, ToggleRight } from 'lucide-react';
+import { Edit, Trash } from 'lucide-react';
 
 interface Category {
     id: number;
@@ -305,7 +305,7 @@ export default function FAQTable({ categories, items }: FAQTableProps) {
                                         size="icon"
                                         onClick={() => handleDeleteCategory(category.id)}
                                     >
-                                        <Trash2 className="h-4 w-4" />
+                                        <Trash className="h-4 w-4" />
                                     </Button>
                                 </div>
                             </div>
@@ -452,7 +452,7 @@ export default function FAQTable({ categories, items }: FAQTableProps) {
                                                         size="icon"
                                                         onClick={() => handleDeleteItem(item.id)}
                                                     >
-                                                        <Trash2 className="h-4 w-4" />
+                                                        <Trash className="h-4 w-4" />
                                                     </Button>
                                                 </TableCell>
                                             </TableRow>

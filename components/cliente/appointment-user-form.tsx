@@ -66,16 +66,12 @@ export function AppointmentUserForm({ pets }: Props) {
     async function onSubmit(data: AppointmentSchema) {
         setIsSubmitting(true);
         try {
-            const result = await createAppointment(data);
-            if (result.error) {
-                toast.error(result.error);
-            } else {
-                toast.success('Consulta agendada com sucesso!');
-                router.refresh();
-                form.reset();
-            }
-        } catch (error) {
-            toast.error('Erro ao agendar consulta. Por favor, tente novamente.');
+            await createAppointment(data);
+            toast.success("Consulta agendada com sucesso!");
+            form.reset();
+        } catch (err) {
+            console.error("Error creating appointment:", err);
+            toast.error("Erro ao agendar consulta. Tente novamente.");
         } finally {
             setIsSubmitting(false);
         }
