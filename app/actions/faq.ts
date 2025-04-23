@@ -213,7 +213,7 @@ export async function getFaqCategories() {
 
 export async function getFaqItems(categoryId?: number) {
     try {
-        let baseQuery = db.select()
+        const baseQuery = db.select()
             .from(faqItemsTable)
             .orderBy(faqItemsTable.order);
 

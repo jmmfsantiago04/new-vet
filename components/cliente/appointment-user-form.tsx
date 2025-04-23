@@ -39,7 +39,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { appointmentSchema, type AppointmentSchema } from '@/app/lib/validations/appointment';
 import { createAppointment } from '@/app/actions/appointments';
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 
 const timeSlots = [
     '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
@@ -51,7 +50,6 @@ type Props = {
 };
 
 export function AppointmentUserForm({ pets }: Props) {
-    const router = useRouter();
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const form = useForm<AppointmentSchema>({

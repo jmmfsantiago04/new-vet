@@ -38,7 +38,6 @@ const paginationAnimation = {
 
 interface BlogSectionProps {
     currentPage?: number
-    totalPages?: number
 }
 
 function BlogSectionSkeleton() {
@@ -62,7 +61,7 @@ function BlogSectionSkeleton() {
     )
 }
 
-export async function BlogSection({ currentPage = 1, totalPages = 1 }: BlogSectionProps) {
+export async function BlogSection({ currentPage = 1 }: BlogSectionProps) {
     const itemsPerPage = 6;
     const offset = (currentPage - 1) * itemsPerPage;
 
