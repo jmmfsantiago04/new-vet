@@ -6,11 +6,12 @@ export const metadata: Metadata = {
     description: "Artigos e dicas sobre saúde e bem-estar animal.",
 }
 
-export default async function BlogPage({
-    searchParams,
-}: {
-    searchParams: { [key: string]: string | string[] | undefined }
-}) {
+interface PageProps {
+    params: { [key: string]: string | undefined }
+    searchParams?: { [key: string]: string | string[] | undefined }
+}
+
+export default async function BlogPage({ searchParams = {} }: PageProps) {
     const page = typeof searchParams?.page === 'string' ? parseInt(searchParams.page) : 1;
 
     return (

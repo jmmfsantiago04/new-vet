@@ -5,7 +5,7 @@ import { db } from "@/app/db";
 import { usersTable } from "@/app/db/schema";
 import bcrypt from 'bcrypt';
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/lib/auth";
 
 export async function changePassword(data: { currentPassword: string; newPassword: string }) {
     try {
