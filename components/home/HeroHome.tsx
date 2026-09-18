@@ -64,8 +64,8 @@ export default function HeroHome() {
                         transition={{ duration: 0.5, delay: 0.3 }}
                     >
                         <Image
-                            src="/placeholder-vet.jpg"
-                            alt="Veterinário com pet"
+                            src="/hero-vet.jpg"
+                            alt="Veterinário em consulta com um pet"
                             fill
                             priority
                             sizes="(max-width: 768px) 100vw, 50vw"

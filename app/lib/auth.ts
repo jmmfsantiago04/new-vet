@@ -4,7 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import { db } from '@/app/db';
 import { eq } from 'drizzle-orm';
 import { usersTable } from '@/app/db/schema';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export const authOptions: AuthOptions = {
     providers: [
@@ -132,24 +132,14 @@ export const authOptions: AuthOptions = {
             return token;
         },
         async redirect({ url, baseUrl }) {
-            // Create a complete URL by combining baseUrl with the relative URL if needed
-            const fullUrl = url.startsWith('http') ? url : `${baseUrl}${url}`;
-            const urlObj = new URL(fullUrl);
-            const token = urlObj.searchParams.get('token');
-
-            if (token) {
-                const user = await db.query.usersTable.findFirst({
-                    where: eq(usersTable.email, decodeURIComponent(token)),
-                    columns: { role: true }
-                });
-
-                if (user?.role === 'admin') {
-                    return `${baseUrl}/admin`;
-                }
+            // Allow relative callback URLs and same-origin absolute URLs only
+            if (url.startsWith("/")) {
+                return `${baseUrl}${url}`;
             }
-
-            // Default redirect to dashboard
-            return `${baseUrl}/cliente/dashboard`;
+            if (url.startsWith(baseUrl)) {
+                return url;
+            }
+            return baseUrl;
         },
     },
     pages: {

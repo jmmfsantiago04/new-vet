@@ -21,13 +21,13 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 
     if (!post) {
         return {
-            title: 'Post não encontrado | Vet Online',
+            title: 'Post não encontrado | VetPay',
             description: 'O post que você procura não foi encontrado.'
         }
     }
 
     return {
-        title: `${post.title} | Vet Online`,
+        title: `${post.title} | VetPay`,
         description: post.summary
     }
 }

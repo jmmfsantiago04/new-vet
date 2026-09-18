@@ -4,7 +4,7 @@ import { db } from "@/app/db"
 import { faqCategoriesTable, faqItemsTable } from "@/app/db/schema"
 
 export const metadata: Metadata = {
-    title: "FAQ | Vet Online",
+    title: "FAQ | VetPay",
     description: "Encontre respostas para as perguntas mais frequentes sobre nossos serviços veterinários online.",
 }
 

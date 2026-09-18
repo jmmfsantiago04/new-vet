@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import * as motion from "motion/react-client"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -122,12 +123,20 @@ export function ServicesSection() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid gap-6 md:gap-8 md:grid-cols-2 lg:grid-cols-3 place-items-start">
                     {services.map((service, index) => (
-                        <motion.article
-                            key={service.id}
+                        <motion.article id={service.id === 1 ? "video" : service.id === 2 ? "chat" : "emergency"} key={service.id}
                             {...cardAnimation}
                             transition={{ duration: 0.5, delay: index * 0.2 }}
                         >
-                            <Card className="w-full max-w-sm mx-auto bg-white shadow-lg hover:shadow-xl transition-shadow duration-300">
+                            <Card className="w-full max-w-sm mx-auto bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+                                <div className="relative h-40 w-full bg-muted">
+                                    <Image
+                                        src={service.image}
+                                        alt={service.name}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 33vw"
+                                        className="object-cover"
+                                    />
+                                </div>
                                 <CardHeader className="space-y-2">
                                     <motion.span
                                         className="text-5xl mb-2"

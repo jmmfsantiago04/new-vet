@@ -12,7 +12,7 @@ const serviceLinks = [
     { href: "/services#video", text: "Consulta por Vídeo" },
     { href: "/services#chat", text: "Suporte por Chat" },
     { href: "/services#emergency", text: "Atendimento de Emergência" },
-    { href: "/services#followup", text: "Acompanhamento" }
+    { href: "/services", text: "Acompanhamento" }
 ]
 
 const contactInfo = [

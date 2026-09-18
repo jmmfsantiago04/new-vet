@@ -8,7 +8,7 @@ export default function GoogleSignInButton() {
         <Button
             onClick={() => signIn('google', {
                 redirect: true,
-                callbackUrl: '/api/auth/callback/google'
+                callbackUrl: '/cliente/dashboard'
             })}
             variant="outline"
             className="w-full flex items-center justify-center gap-2"

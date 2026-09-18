@@ -5,7 +5,7 @@ import { CTAServices } from "@/components/services/CTAServices"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-    title: "Serviços | Vet Online",
+    title: "Serviços | VetPay",
     description: "Conheça nossos serviços veterinários online e escolha o melhor para o seu pet.",
 }
 

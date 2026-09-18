@@ -1,14 +1,15 @@
-'use client';
+"use client";
 
-import { useTransition } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { signInSchema, SignInInput } from '@/app/db/schema';
-import { signIn } from 'next-auth/react';
-import { toast } from 'sonner';
+import { useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signInSchema, SignInInput } from "@/app/db/schema";
+import { getSession, signIn } from "next-auth/react";
+import { toast } from "sonner";
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
     Form,
     FormControl,
@@ -16,28 +17,49 @@ import {
     FormItem,
     FormLabel,
     FormMessage,
-} from '@/components/ui/form';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import GoogleSignInButton from './GoogleSignInButton';
+} from "@/components/ui/form";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+} from "@/components/ui/card";
+import GoogleSignInButton from "./GoogleSignInButton";
 
 export default function LoginForm() {
+    const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const form = useForm<SignInInput>({
         resolver: zodResolver(signInSchema),
         defaultValues: {
-            email: '',
-            password: '',
+            email: "",
+            password: "",
         },
     });
 
     const onSubmit = (data: SignInInput) => {
         startTransition(async () => {
             try {
-                await signIn("credentials", {
+                const result = await signIn("credentials", {
                     email: data.email,
                     password: data.password,
-                    callbackUrl: "/cliente/dashboard",
+                    redirect: false,
                 });
+
+                if (result?.error) {
+                    toast.error("Erro ao fazer login. Verifique suas credenciais.");
+                    return;
+                }
+
+                const session = await getSession();
+                const destination =
+                    session?.user?.role === "admin"
+                        ? "/admin"
+                        : "/cliente/dashboard";
+
+                router.push(destination);
+                router.refresh();
             } catch (err) {
                 console.error("Error signing in:", err);
                 toast.error("Erro ao fazer login. Verifique suas credenciais.");
@@ -49,7 +71,9 @@ export default function LoginForm() {
         <div className="min-h-screen bg-blue-50 flex items-center justify-center py-8 px-4">
             <Card className="w-[95%] max-w-md shadow-lg">
                 <CardHeader className="space-y-2">
-                    <CardTitle className="text-2xl sm:text-3xl font-bold">Entrar</CardTitle>
+                    <CardTitle className="text-2xl sm:text-3xl font-bold">
+                        Entrar
+                    </CardTitle>
                     <CardDescription className="text-sm sm:text-base">
                         Acesse sua conta para gerenciar seus pets
                     </CardDescription>
@@ -69,7 +93,10 @@ export default function LoginForm() {
                     </div>
 
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
+                        <form
+                            onSubmit={form.handleSubmit(onSubmit)}
+                            className="space-y-4 sm:space-y-6"
+                        >
                             {form.formState.errors.root && (
                                 <div className="bg-destructive/10 border border-destructive/20 text-destructive p-3 sm:p-4 rounded-lg text-sm sm:text-base">
                                     {form.formState.errors.root.message}
@@ -81,7 +108,9 @@ export default function LoginForm() {
                                 name="email"
                                 render={({ field }) => (
                                     <FormItem className="space-y-2 sm:space-y-3">
-                                        <FormLabel className="text-sm sm:text-base">E-mail</FormLabel>
+                                        <FormLabel className="text-sm sm:text-base">
+                                            E-mail
+                                        </FormLabel>
                                         <FormControl>
                                             <Input
                                                 type="email"
@@ -100,7 +129,9 @@ export default function LoginForm() {
                                 name="password"
                                 render={({ field }) => (
                                     <FormItem className="space-y-2 sm:space-y-3">
-                                        <FormLabel className="text-sm sm:text-base">Senha</FormLabel>
+                                        <FormLabel className="text-sm sm:text-base">
+                                            Senha
+                                        </FormLabel>
                                         <FormControl>
                                             <Input
                                                 type="password"
@@ -120,7 +151,7 @@ export default function LoginForm() {
                                 disabled={isPending}
                                 size="lg"
                             >
-                                {isPending ? 'Entrando...' : 'Entrar'}
+                                {isPending ? "Entrando..." : "Entrar"}
                             </Button>
                         </form>
                     </Form>
@@ -128,4 +159,4 @@ export default function LoginForm() {
             </Card>
         </div>
     );
-} 
+}

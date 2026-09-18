@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VetPay
 
-## Getting Started
+Tele-veterinary clinic app built with Next.js: a public marketing site, a client area for pets and appointments, and an admin CRM for users, bookings, blog, and FAQ.
 
-First, run the development server:
+> Repo folder is still named `new-vet`; the product name is **VetPay**.
+
+## Live demo
+
+https://new-vet.vercel.app/
+
+## Stack
+
+- **Next.js 15** (App Router) + **React 19**
+- **Neon** (Postgres) + **Drizzle ORM**
+- **NextAuth** (Credentials + optional Google)
+- **Zod** validation + Server Actions
+- **shadcn/ui** + **Tailwind CSS** + Motion
+
+## Features
+
+- Public pages: home, services, about, blog, FAQ
+- Client dashboard: register pets, book appointments, edit profile
+- Admin panel: appointments, users, pets, blog CMS, FAQ CMS
+- Role-based access (`admin` / `user`) via middleware
+
+## Getting started
+
+### 1. Clone and install
+
+```bash
+git clone https://github.com/jmmfsantiago04/new-vet.git
+cd new-vet
+npm install --legacy-peer-deps
+```
+
+### 2. Environment
+
+```bash
+cp .env.example .env.local
+```
+
+Fill in at least:
+
+| Variable | Purpose |
+| --- | --- |
+| `DATABASE_URL` | Neon connection string |
+| `NEXTAUTH_SECRET` | Random secret for session encryption |
+| `NEXTAUTH_URL` | `http://localhost:3000` locally |
+
+Google vars are optional (only needed for Google sign-in).
+
+### 3. Database
+
+```bash
+npm run db:push
+npm run db:seed
+```
+
+Seed creates an admin user:
+
+- **Email:** `admin@vetpay.com`
+- **Password:** `Admin@123`
+
+Change this password before sharing a public demo widely.
+
+### 4. Run
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script | What it does |
+| --- | --- |
+| `npm run dev` | Dev server (Turbopack) |
+| `npm run build` | Production build |
+| `npm run start` | Start production server |
+| `npm run lint` | ESLint |
+| `npm run db:generate` | Generate Drizzle migrations |
+| `npm run db:push` | Push schema to the database |
+| `npm run db:seed` | Seed admin + sample content |
+| `npm run db:studio` | Open Drizzle Studio |
 
-## Learn More
+## Project layout (high level)
 
-To learn more about Next.js, take a look at the following resources:
+- `app/` — routes (public, `/cliente`, `/admin`), server actions, DB schema
+- `components/` — UI for home, auth, client, admin, shadcn primitives
+- `drizzle/` — SQL migrations
+- `middleware.ts` — auth / role gates
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notes for reviewers
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is meant to show a **multi-role full-stack product** (client + admin), not only a landing page. Pair it with the É de Chão café project for brand/UI polish vs product/auth depth.

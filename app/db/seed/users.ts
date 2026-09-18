@@ -1,6 +1,6 @@
 import { db } from '@/app/db';
 import { usersTable, UserRole } from '@/app/db/schema';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export async function seedUsers() {
     try {
