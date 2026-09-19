@@ -3,7 +3,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "@/app/db";
 import { usersTable } from "@/app/db/schema";
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
 
