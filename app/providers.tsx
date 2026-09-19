@@ -14,13 +14,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
     return (
         <SessionProvider>
             {!hidePublicChrome && <Navbar />}
-            <main
+            <div
                 className={
-                    hidePublicChrome ? "min-h-screen flex-grow" : "flex-grow"
+                    hidePublicChrome
+                        ? "flex min-h-0 flex-1 flex-col"
+                        : "flex-grow"
                 }
             >
                 {children}
-            </main>
+            </div>
             {!hidePublicChrome && <Footer />}
             <Toaster />
         </SessionProvider>

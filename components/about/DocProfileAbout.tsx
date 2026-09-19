@@ -25,7 +25,7 @@ export default function DocProfileAbout() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     <motion.div
-                        className="relative h-[500px] rounded-2xl overflow-hidden shadow-xl"
+                        className="relative h-64 sm:h-80 md:h-[420px] rounded-2xl overflow-hidden shadow-xl"
                         {...slideLeftAnimation}
                         transition={{ duration: 0.6 }}
                     >

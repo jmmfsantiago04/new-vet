@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
     return (
-        <main className="flex min-h-screen flex-col">
+        <div className="flex flex-col">
             <ServicesHero />
             <ServicesSection />
             <ConditionsSection />
             <CTAServices />
-        </main>
+        </div>
     )
 } 

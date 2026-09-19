@@ -35,7 +35,7 @@ export default function AdminLayout({
 
     return (
         <SidebarProvider defaultOpen={true}>
-            <div className="flex min-h-screen h-screen w-full bg-gray-100">
+            <div className="flex h-dvh min-h-dvh w-full bg-gray-100">
                 {/* Desktop Sidebar */}
                 <Sidebar
                     className="hidden md:flex h-screen border-r bg-white shadow-sm"
@@ -89,7 +89,7 @@ export default function AdminLayout({
                                             }`}
                                     >
                                         <span className="text-lg sm:text-xl mb-0.5">{item.icon}</span>
-                                        <span className="text-[10px] sm:text-xs">{item.label}</span>
+                                        <span className="sr-only">{item.label}</span>
                                     </Link>
                                 );
                             })}
@@ -98,7 +98,7 @@ export default function AdminLayout({
                 </Card>
 
                 {/* Main Content */}
-                <main className="flex-1 h-screen overflow-auto w-full pb-20 md:pb-0">
+                <main className="h-full w-full flex-1 overflow-auto pb-20 md:pb-0">
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 max-w-7xl">
                         {children}
                     </div>

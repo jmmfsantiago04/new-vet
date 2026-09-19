@@ -16,7 +16,7 @@ const cardAnimation = {
     whileInView: { opacity: 1, backgroundColor: "rgb(255, 255, 255)" },
     viewport: { once: true },
     whileHover: {
-        scale: 1.1,
+        scale: 1.02,
         transition: { duration: 0.2 }
     }
 }

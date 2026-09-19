@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
     return (
-        <main className="min-h-screen">
+        <div className="">
             <BlogSection />
-        </main>
+        </div>
     )
 } 

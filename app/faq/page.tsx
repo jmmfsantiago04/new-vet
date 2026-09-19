@@ -20,7 +20,7 @@ export default async function FaqPage() {
     }));
 
     return (
-        <main className="flex min-h-screen flex-col">
+        <div className="flex flex-col">
             <section className="bg-gradient-to-b from-blue-50/50 to-blue-50 py-16 relative overflow-hidden">
 
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
@@ -37,6 +37,6 @@ export default async function FaqPage() {
                 </div>
             </section>
             <FaqContent categories={categoriesWithItems} />
-        </main>
+        </div>
     )
 } 

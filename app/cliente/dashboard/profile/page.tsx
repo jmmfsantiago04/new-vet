@@ -36,7 +36,7 @@ export default async function Page() {
     }
 
     return (
-        <div className="container mx-auto py-6 max-w-4xl">
+        <div className="mx-auto max-w-4xl px-4 py-6 sm:px-6">
             <div className="mb-8">
                 <h1 className="text-2xl font-bold text-[var(--primary)]">Configurações do Perfil</h1>
                 <p className="text-[var(--text-secondary)]">

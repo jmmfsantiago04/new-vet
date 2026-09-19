@@ -56,6 +56,11 @@
   --primary: oklch(0.55 0.25 250);
   /* Rich purple */
   --primary-light: oklch(0.65 0.22 260);
+
+  /* App semantic tokens used across marketing/admin */
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
+  --primary-dark: oklch(0.45 0.22 250);
   /* Lighter purple */
   --secondary: oklch(0.60 0.28 140);
   /* Vibrant teal */
@@ -97,6 +102,11 @@
   --primary: oklch(0.60 0.28 250);
   /* Brighter purple for dark mode */
   --primary-light: oklch(0.70 0.25 260);
+
+  /* App semantic tokens used across marketing/admin */
+  --text-primary: var(--foreground);
+  --text-secondary: var(--muted-foreground);
+  --primary-dark: oklch(0.45 0.22 250);
   /* Lighter purple for dark mode */
   --secondary: oklch(0.65 0.30 140);
   /* Brighter teal for dark mode */

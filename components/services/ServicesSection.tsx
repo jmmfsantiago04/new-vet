@@ -23,7 +23,7 @@ const iconAnimation = {
     whileInView: { scale: 1 },
     viewport: { once: true },
     whileHover: {
-        scale: 1.1,
+        scale: 1.02,
         transition: {
             type: "spring",
             stiffness: 400,
@@ -127,7 +127,7 @@ export function ServicesSection() {
                             {...cardAnimation}
                             transition={{ duration: 0.5, delay: index * 0.2 }}
                         >
-                            <Card className="w-full max-w-sm mx-auto bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+                            <Card className="w-full bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
                                 <div className="relative h-40 w-full bg-muted">
                                     <Image
                                         src={service.image}

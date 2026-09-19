@@ -12,7 +12,7 @@ const fadeUpAnimation = {
 }
 
 const buttonAnimation = {
-    whileHover: { scale: 1.1 },
+    whileHover: { scale: 1.02 },
     whileTap: { scale: 0.95 }
 }
 
@@ -59,7 +59,7 @@ export default function HeroHome() {
                         </motion.div>
                     </motion.div>
                     <motion.div
-                        className="relative w-full h-[250px] xs:h-[300px] sm:h-[350px] md:h-[400px] mt-6 md:mt-0 rounded-xl overflow-hidden shadow-lg"
+                        className="relative w-full h-[250px] sm:h-[350px] md:h-[400px] mt-6 md:mt-0 rounded-xl overflow-hidden shadow-lg"
                         {...fadeScaleAnimation}
                         transition={{ duration: 0.5, delay: 0.3 }}
                     >

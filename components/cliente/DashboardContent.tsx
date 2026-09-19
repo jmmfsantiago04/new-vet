@@ -51,9 +51,9 @@ export function DashboardContent({ userName, userPets, userAppointments }: Dashb
     }));
 
     return (
-        <div className="min-h-screen bg-blue-50 container mx-auto px-4 py-8">
+        <div className="bg-blue-50 mx-auto max-w-6xl px-4 py-8 sm:px-6">
             <div className="max-w-6xl mx-auto space-y-8">
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex flex-col gap-2">
                         <h1 className="text-3xl font-bold tracking-tight text-[var(--primary)]">
                             Olá, {userName}! 👋

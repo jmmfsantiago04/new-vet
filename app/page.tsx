@@ -1,13 +1,13 @@
-import HeroHome from '@/components/home/HeroHome'
-import HomeServices from '@/components/home/HomeServices'
-import HowToHome from '@/components/home/HowToHome'
+import HeroHome from "@/components/home/HeroHome";
+import HomeServices from "@/components/home/HomeServices";
+import HowToHome from "@/components/home/HowToHome";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col">
+    <div className="flex flex-col">
       <HeroHome />
       <HomeServices />
       <HowToHome />
-    </main>
-  )
+    </div>
+  );
 }

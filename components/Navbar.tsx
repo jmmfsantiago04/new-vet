@@ -90,7 +90,7 @@ export default function Navbar() {
 
                     <Link
                         href="/"
-                        className="relative w-45 h-20 hover:opacity-90 transition-opacity p-2 rounded-lg"
+                        className="relative h-10 w-28 sm:h-12 sm:w-36 hover:opacity-90 transition-opacity rounded-lg"
                     >
                         <Image
                             src="/LogoBranco.png"
