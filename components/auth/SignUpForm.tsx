@@ -103,7 +103,7 @@ export default function SignUpForm() {
     };
 
     return (
-        <div className="min-h-screen bg-blue-50 flex items-center justify-center py-8 px-4">
+        <div className="w-full">
             <Card className="w-full max-w-md shadow-lg">
                 <CardHeader>
                     <CardTitle>Criar uma Conta</CardTitle>

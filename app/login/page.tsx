@@ -1,21 +1,19 @@
-import LoginForm from '@/components/auth/LoginForm';
+import LoginForm from "@/components/auth/LoginForm";
 
 export default function LoginPage() {
     return (
-        <main className="min-h-screen bg-blue-50">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div className="max-w-2xl mx-auto">
-                    <div className="text-center mb-8">
-                        <h1 className="text-3xl font-bold tracking-tight text-[var(--primary)]">
-                            Bem-vindo de volta
-                        </h1>
-                        <p className="mt-2 text-lg text-[var(--text-secondary)]">
-                            Entre para acessar os serviços veterinários
-                        </p>
-                    </div>
-                    <LoginForm />
+        <main className="flex min-h-[calc(100vh-5rem)] items-center justify-center bg-blue-50 px-4 py-8 sm:py-12">
+            <div className="w-full max-w-md space-y-6">
+                <div className="space-y-2 text-center">
+                    <h1 className="text-2xl font-bold tracking-tight text-[var(--primary)] sm:text-3xl">
+                        Bem-vindo de volta
+                    </h1>
+                    <p className="text-base text-[var(--text-secondary)] sm:text-lg">
+                        Entre para acessar os serviços veterinários
+                    </p>
                 </div>
+                <LoginForm />
             </div>
         </main>
     );
-} 
+}

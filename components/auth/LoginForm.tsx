@@ -68,8 +68,8 @@ export default function LoginForm() {
     };
 
     return (
-        <div className="min-h-screen bg-blue-50 flex items-center justify-center py-8 px-4">
-            <Card className="w-[95%] max-w-md shadow-lg">
+        <div className="w-full">
+            <Card className="w-full shadow-lg">
                 <CardHeader className="space-y-2">
                     <CardTitle className="text-2xl sm:text-3xl font-bold">
                         Entrar
